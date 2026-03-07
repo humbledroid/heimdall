@@ -10,6 +10,7 @@ final class DeviceMirroringViewModel {
     var activeSessions: [MirroringSession] = []
 
     var isLoading: Bool = false
+    var isRefreshing: Bool = false
     var errorMessage: String?
     var isAvailable: Bool = false
 
@@ -18,7 +19,6 @@ final class DeviceMirroringViewModel {
     private let environmentService: EnvironmentService
     private let usbMonitor: USBDeviceMonitor
     private var monitorTask: Task<Void, Never>?
-    private var pollTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService) {
         self.environmentService = environmentService
@@ -74,13 +74,14 @@ final class DeviceMirroringViewModel {
         isLoading = false
     }
 
+    /// Manual refresh triggered by user or by USB event.
     func refresh() async {
         guard environmentService.adbPath != nil else { return }
 
+        isRefreshing = true
         do {
             let deviceList = try await adbService.listConnectedDevices()
 
-            // Enrich new devices with model names
             var enriched: [AndroidDevice] = []
             for device in deviceList {
                 // Re-use existing model name if we already have it
@@ -113,6 +114,7 @@ final class DeviceMirroringViewModel {
         } catch {
             errorMessage = error.localizedDescription
         }
+        isRefreshing = false
     }
 
     // MARK: - Mirroring Actions
@@ -144,29 +146,27 @@ final class DeviceMirroringViewModel {
         await scrcpyService.isMirroring(deviceSerial: device.serial)
     }
 
-    // MARK: - USB Monitoring
+    // MARK: - USB Monitoring (Event-Driven)
 
     /// Start real-time USB monitoring via `adb track-devices`.
-    /// Falls back to polling if the monitor cannot be started or if adb is unavailable.
+    /// This is event-driven — refreshes only happen when a device is
+    /// actually connected or disconnected.
     func startMonitoring() {
         monitorTask?.cancel()
 
-        // If adb isn't available, just use polling directly
         guard environmentService.adbPath != nil else {
-            print("[Heimdall:USB] adb not found, using polling fallback")
-            startPolling()
+            print("[Heimdall:USB] adb not found, cannot monitor devices")
             return
         }
 
         monitorTask = Task { [weak self] in
             guard let self else { return }
 
+            print("[Heimdall:USB] Starting event-driven device monitoring")
             let events = self.usbMonitor.startMonitoring()
-            var receivedAnyEvent = false
 
             for await event in events {
                 guard !Task.isCancelled else { break }
-                receivedAnyEvent = true
                 switch event {
                 case .changed:
                     print("[Heimdall:USB] Device change event — refreshing")
@@ -174,14 +174,8 @@ final class DeviceMirroringViewModel {
                 }
             }
 
-            // If the monitor stream ends (adb died, etc.), fall back to polling
             if !Task.isCancelled {
-                if receivedAnyEvent {
-                    print("[Heimdall:USB] Monitor stream ended after receiving events, falling back to polling")
-                } else {
-                    print("[Heimdall:USB] Monitor stream ended without any events (adb issue?), falling back to polling")
-                }
-                self.startPolling()
+                print("[Heimdall:USB] Monitor stream ended unexpectedly")
             }
         }
     }
@@ -190,25 +184,6 @@ final class DeviceMirroringViewModel {
     func stopMonitoring() {
         monitorTask?.cancel()
         monitorTask = nil
-        pollTask?.cancel()
-        pollTask = nil
         usbMonitor.stopMonitoring()
-    }
-
-    // MARK: - Polling (Fallback)
-
-    func startPolling() {
-        pollTask?.cancel()
-        pollTask = Task { [weak self] in
-            while !Task.isCancelled {
-                await self?.refresh()
-                try? await Task.sleep(for: .seconds(5))
-            }
-        }
-    }
-
-    func stopPolling() {
-        pollTask?.cancel()
-        pollTask = nil
     }
 }

@@ -15,6 +15,9 @@ struct DeviceMirroringTabView: View {
                     subtitle: "Configure the Android SDK path in Settings to detect connected devices."
                 )
             } else {
+                // Toolbar with refresh
+                toolbar
+
                 // Error banner
                 if let error = viewModel.errorMessage {
                     ErrorBanner(message: error) {
@@ -42,6 +45,39 @@ struct DeviceMirroringTabView: View {
                 }
             }
         }
+    }
+
+    // MARK: - Toolbar
+
+    private var toolbar: some View {
+        HStack(spacing: 8) {
+            Text("\(viewModel.devices.count) device(s)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            Spacer()
+
+            // Refresh button
+            Button {
+                Task { await viewModel.refresh() }
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .font(.caption)
+                    .rotationEffect(.degrees(viewModel.isRefreshing ? 360 : 0))
+                    .animation(
+                        viewModel.isRefreshing
+                            ? .linear(duration: 0.8).repeatForever(autoreverses: false)
+                            : .default,
+                        value: viewModel.isRefreshing
+                    )
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+            .disabled(viewModel.isRefreshing)
+            .help("Refresh devices")
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
     }
 
     // MARK: - scrcpy Warning
@@ -75,16 +111,6 @@ struct DeviceMirroringTabView: View {
     private var deviceList: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                // Header
-                HStack {
-                    Text("\(viewModel.devices.count) device(s) connected")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-
                 ForEach(viewModel.devices) { device in
                     DeviceRowView(
                         device: device,

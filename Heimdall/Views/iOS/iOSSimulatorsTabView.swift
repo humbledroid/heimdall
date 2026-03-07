@@ -103,6 +103,25 @@ struct iOSSimulatorsTabView: View {
                     .clipShape(Capsule())
             }
 
+            // Refresh button
+            Button {
+                Task { await viewModel.refresh() }
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .font(.caption)
+                    .rotationEffect(.degrees(viewModel.isRefreshing ? 360 : 0))
+                    .animation(
+                        viewModel.isRefreshing
+                            ? .linear(duration: 0.8).repeatForever(autoreverses: false)
+                            : .default,
+                        value: viewModel.isRefreshing
+                    )
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+            .disabled(viewModel.isRefreshing)
+            .help("Refresh simulators")
+
             // Create button
             Button {
                 showCreateSheet = true

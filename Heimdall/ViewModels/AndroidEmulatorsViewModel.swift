@@ -10,6 +10,7 @@ final class AndroidEmulatorsViewModel {
     var systemImages: [SystemImage] = []
 
     var isLoading: Bool = false
+    var isRefreshing: Bool = false
     var errorMessage: String?
     var isAvailable: Bool = false
 
@@ -20,7 +21,6 @@ final class AndroidEmulatorsViewModel {
 
     private let avdService: AVDService
     private let environmentService: EnvironmentService
-    private var pollTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService) {
         self.environmentService = environmentService
@@ -66,15 +66,18 @@ final class AndroidEmulatorsViewModel {
         isLoading = false
     }
 
+    /// Manual refresh triggered by user.
     func refresh() async {
         guard environmentService.hasAndroidSDK else { return }
 
+        isRefreshing = true
         do {
             emulators = try await avdService.listAVDs()
             errorMessage = nil
         } catch {
             errorMessage = error.localizedDescription
         }
+        isRefreshing = false
     }
 
     // MARK: - Actions
@@ -129,22 +132,5 @@ final class AndroidEmulatorsViewModel {
         } catch {
             errorMessage = "Failed to create emulator: \(error.localizedDescription)"
         }
-    }
-
-    // MARK: - Polling
-
-    func startPolling() {
-        pollTask?.cancel()
-        pollTask = Task { [weak self] in
-            while !Task.isCancelled {
-                await self?.refresh()
-                try? await Task.sleep(for: .seconds(5))
-            }
-        }
-    }
-
-    func stopPolling() {
-        pollTask?.cancel()
-        pollTask = nil
     }
 }

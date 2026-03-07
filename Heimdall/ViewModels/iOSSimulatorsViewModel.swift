@@ -11,6 +11,7 @@ final class iOSSimulatorsViewModel {
     var deviceTypes: [iOSDeviceType] = []
 
     var isLoading: Bool = false
+    var isRefreshing: Bool = false
     var errorMessage: String?
 
     /// Simulators grouped by runtime for the list display.
@@ -28,7 +29,6 @@ final class iOSSimulatorsViewModel {
 
     private let service: SimctlService
     private let openService: OpenService
-    private var pollTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService? = nil) {
         self.service = SimctlService(environmentService: environmentService)
@@ -42,7 +42,6 @@ final class iOSSimulatorsViewModel {
         errorMessage = nil
 
         do {
-            // Run sequentially to avoid actor reentrancy issues
             let sims = try await service.listSimulators()
             let rts = try await service.listRuntimes()
             let dts = try await service.listDeviceTypes()
@@ -60,7 +59,9 @@ final class iOSSimulatorsViewModel {
         isLoading = false
     }
 
+    /// Manual refresh triggered by user pull-to-refresh or refresh button.
     func refresh() async {
+        isRefreshing = true
         do {
             simulators = try await service.listSimulators()
             errorMessage = nil
@@ -68,6 +69,7 @@ final class iOSSimulatorsViewModel {
             errorMessage = error.localizedDescription
             print("[Heimdall] Error refreshing simulators: \(error)")
         }
+        isRefreshing = false
     }
 
     // MARK: - Actions
@@ -128,22 +130,5 @@ final class iOSSimulatorsViewModel {
         } catch {
             errorMessage = "Failed to create simulator: \(error.localizedDescription)"
         }
-    }
-
-    // MARK: - Polling
-
-    func startPolling() {
-        pollTask?.cancel()
-        pollTask = Task { [weak self] in
-            while !Task.isCancelled {
-                await self?.refresh()
-                try? await Task.sleep(for: .seconds(5))
-            }
-        }
-    }
-
-    func stopPolling() {
-        pollTask?.cancel()
-        pollTask = nil
     }
 }
