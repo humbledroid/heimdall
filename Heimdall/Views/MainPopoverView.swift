@@ -94,15 +94,42 @@ struct MainPopoverView: View {
 
             _ = await (iosLoad, androidLoad, devicesLoad)
 
-            // Start background updates
-            iosVM.startPolling()
-            androidVM.startPolling()
-            devicesVM.startMonitoring()
+            // Start polling only for the initially selected tab
+            startPollingForTab(selectedTab)
+        }
+        .onChange(of: selectedTab) { oldTab, newTab in
+            stopPollingForTab(oldTab)
+            startPollingForTab(newTab)
         }
         .sheet(isPresented: $showSettings) {
             SettingsSheet(
                 viewModel: SettingsViewModel(environmentService: environmentService)
             )
+        }
+    }
+
+    // MARK: - Polling Management
+
+    /// Only the active tab polls. This avoids hammering CLI tools in the background.
+    private func startPollingForTab(_ tab: Tab) {
+        switch tab {
+        case .iOS:
+            iOSViewModel?.startPolling()
+        case .android:
+            androidViewModel?.startPolling()
+        case .devices:
+            devicesViewModel?.startMonitoring()
+        }
+    }
+
+    private func stopPollingForTab(_ tab: Tab) {
+        switch tab {
+        case .iOS:
+            iOSViewModel?.stopPolling()
+        case .android:
+            androidViewModel?.stopPolling()
+        case .devices:
+            devicesViewModel?.stopMonitoring()
         }
     }
 

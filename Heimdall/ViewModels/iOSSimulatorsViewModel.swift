@@ -137,7 +137,7 @@ final class iOSSimulatorsViewModel {
         pollTask = Task { [weak self] in
             while !Task.isCancelled {
                 await self?.refresh()
-                try? await Task.sleep(for: .seconds(3))
+                try? await Task.sleep(for: .seconds(5))
             }
         }
     }
