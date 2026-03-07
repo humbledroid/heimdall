@@ -30,7 +30,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let button = statusItem?.button {
             button.image = NSImage(
-                systemSymbolName: "iphone.gen1.motion",
+                systemSymbolName: "macbook.and.iphone",
                 accessibilityDescription: "Heimdall"
             )
             button.image?.size = NSSize(width: 18, height: 18)
