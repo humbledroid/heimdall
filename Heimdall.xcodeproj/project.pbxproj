@@ -7,39 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001A2B001D8F9A2F00A1B2C3 /* HeimdallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B001D8F9A2F00A1B2C2; };
-		001A2B011D8F9A2F00A1B2C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B011D8F9A2F00A1B2C2; };
-		001A2B021D8F9A2F00A1B2C3 /* DeviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B021D8F9A2F00A1B2C2; };
-		001A2B031D8F9A2F00A1B2C3 /* iOSSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B031D8F9A2F00A1B2C2; };
-		001A2B041D8F9A2F00A1B2C3 /* AndroidEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B041D8F9A2F00A1B2C2; };
-		001A2B051D8F9A2F00A1B2C3 /* AndroidDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B051D8F9A2F00A1B2C2; };
-		001A2B061D8F9A2F00A1B2C3 /* ShellCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B061D8F9A2F00A1B2C2; };
-		001A2B071D8F9A2F00A1B2C3 /* EnvironmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B071D8F9A2F00A1B2C2; };
-		001A2B081D8F9A2F00A1B2C3 /* SimctlService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B081D8F9A2F00A1B2C2; };
-		001A2B091D8F9A2F00A1B2C3 /* AVDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B091D8F9A2F00A1B2C2; };
-		001A2B0A1D8F9A2F00A1B2C3 /* ADBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0A1D8F9A2F00A1B2C2; };
-		001A2B0B1D8F9A2F00A1B2C3 /* ScrcpyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0B1D8F9A2F00A1B2C2; };
-		001A2B1F1D8F9A2F00A1B2C3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1F1D8F9A2F00A1B2C2; };
-		001A2B0C1D8F9A2F00A1B2C3 /* iOSSimulatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0C1D8F9A2F00A1B2C2; };
-		001A2B0D1D8F9A2F00A1B2C3 /* AndroidEmulatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0D1D8F9A2F00A1B2C2; };
-		001A2B0E1D8F9A2F00A1B2C3 /* DeviceMirroringViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0E1D8F9A2F00A1B2C2; };
-		001A2B0F1D8F9A2F00A1B2C3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0F1D8F9A2F00A1B2C2; };
-		001A2B101D8F9A2F00A1B2C3 /* MainPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B101D8F9A2F00A1B2C2; };
-		001A2B111D8F9A2F00A1B2C3 /* iOSSimulatorsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B111D8F9A2F00A1B2C2; };
-		001A2B121D8F9A2F00A1B2C3 /* SimulatorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B121D8F9A2F00A1B2C2; };
-		001A2B131D8F9A2F00A1B2C3 /* CreateSimulatorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B131D8F9A2F00A1B2C2; };
-		001A2B141D8F9A2F00A1B2C3 /* AndroidEmulatorsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B141D8F9A2F00A1B2C2; };
-		001A2B151D8F9A2F00A1B2C3 /* EmulatorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B151D8F9A2F00A1B2C2; };
-		001A2B161D8F9A2F00A1B2C3 /* CreateEmulatorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B161D8F9A2F00A1B2C2; };
-		001A2B171D8F9A2F00A1B2C3 /* DeviceMirroringTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B171D8F9A2F00A1B2C2; };
-		001A2B181D8F9A2F00A1B2C3 /* DeviceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B181D8F9A2F00A1B2C2; };
-		001A2B191D8F9A2F00A1B2C3 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B191D8F9A2F00A1B2C2; };
-		001A2B1A1D8F9A2F00A1B2C3 /* StatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1A1D8F9A2F00A1B2C2; };
-		001A2B1B1D8F9A2F00A1B2C3 /* ActionButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1B1D8F9A2F00A1B2C2; };
-		001A2B1C1D8F9A2F00A1B2C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 001A2B1C1D8F9A2F00A1B2C2; };
+		001A2B001D8F9A2F00A1B2C3 /* HeimdallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B001D8F9A2F00A1B2C2 /* HeimdallApp.swift */; };
+		001A2B011D8F9A2F00A1B2C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B011D8F9A2F00A1B2C2 /* AppDelegate.swift */; };
+		001A2B021D8F9A2F00A1B2C3 /* DeviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B021D8F9A2F00A1B2C2 /* DeviceStatus.swift */; };
+		001A2B031D8F9A2F00A1B2C3 /* iOSSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B031D8F9A2F00A1B2C2 /* iOSSimulator.swift */; };
+		001A2B041D8F9A2F00A1B2C3 /* AndroidEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B041D8F9A2F00A1B2C2 /* AndroidEmulator.swift */; };
+		001A2B051D8F9A2F00A1B2C3 /* AndroidDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B051D8F9A2F00A1B2C2 /* AndroidDevice.swift */; };
+		001A2B061D8F9A2F00A1B2C3 /* ShellCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B061D8F9A2F00A1B2C2 /* ShellCommandRunner.swift */; };
+		001A2B071D8F9A2F00A1B2C3 /* EnvironmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B071D8F9A2F00A1B2C2 /* EnvironmentService.swift */; };
+		001A2B081D8F9A2F00A1B2C3 /* SimctlService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B081D8F9A2F00A1B2C2 /* SimctlService.swift */; };
+		001A2B091D8F9A2F00A1B2C3 /* AVDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B091D8F9A2F00A1B2C2 /* AVDService.swift */; };
+		001A2B0A1D8F9A2F00A1B2C3 /* ADBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0A1D8F9A2F00A1B2C2 /* ADBService.swift */; };
+		001A2B0B1D8F9A2F00A1B2C3 /* ScrcpyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0B1D8F9A2F00A1B2C2 /* ScrcpyService.swift */; };
+		001A2B0C1D8F9A2F00A1B2C3 /* iOSSimulatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0C1D8F9A2F00A1B2C2 /* iOSSimulatorsViewModel.swift */; };
+		001A2B0D1D8F9A2F00A1B2C3 /* AndroidEmulatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0D1D8F9A2F00A1B2C2 /* AndroidEmulatorsViewModel.swift */; };
+		001A2B0E1D8F9A2F00A1B2C3 /* DeviceMirroringViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0E1D8F9A2F00A1B2C2 /* DeviceMirroringViewModel.swift */; };
+		001A2B0F1D8F9A2F00A1B2C3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0F1D8F9A2F00A1B2C2 /* SettingsViewModel.swift */; };
+		001A2B101D8F9A2F00A1B2C3 /* MainPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B101D8F9A2F00A1B2C2 /* MainPopoverView.swift */; };
+		001A2B111D8F9A2F00A1B2C3 /* iOSSimulatorsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B111D8F9A2F00A1B2C2 /* iOSSimulatorsTabView.swift */; };
+		001A2B121D8F9A2F00A1B2C3 /* SimulatorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B121D8F9A2F00A1B2C2 /* SimulatorRowView.swift */; };
+		001A2B131D8F9A2F00A1B2C3 /* CreateSimulatorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B131D8F9A2F00A1B2C2 /* CreateSimulatorSheet.swift */; };
+		001A2B141D8F9A2F00A1B2C3 /* AndroidEmulatorsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B141D8F9A2F00A1B2C2 /* AndroidEmulatorsTabView.swift */; };
+		001A2B151D8F9A2F00A1B2C3 /* EmulatorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B151D8F9A2F00A1B2C2 /* EmulatorRowView.swift */; };
+		001A2B161D8F9A2F00A1B2C3 /* CreateEmulatorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B161D8F9A2F00A1B2C2 /* CreateEmulatorSheet.swift */; };
+		001A2B171D8F9A2F00A1B2C3 /* DeviceMirroringTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B171D8F9A2F00A1B2C2 /* DeviceMirroringTabView.swift */; };
+		001A2B181D8F9A2F00A1B2C3 /* DeviceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B181D8F9A2F00A1B2C2 /* DeviceRowView.swift */; };
+		001A2B191D8F9A2F00A1B2C3 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B191D8F9A2F00A1B2C2 /* SettingsSheet.swift */; };
+		001A2B1A1D8F9A2F00A1B2C3 /* StatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1A1D8F9A2F00A1B2C2 /* StatusBadgeView.swift */; };
+		001A2B1B1D8F9A2F00A1B2C3 /* ActionButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1B1D8F9A2F00A1B2C2 /* ActionButtonGroup.swift */; };
+		001A2B1C1D8F9A2F00A1B2C3 /* Resources/Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 001A2B1C1D8F9A2F00A1B2C2 /* Resources/Assets.xcassets */; };
+		001A2B1F1D8F9A2F00A1B2C3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */; };
+		E10A79A72F5C9C49007D9794 /* OpenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10A79A62F5C9C49007D9794 /* OpenService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		001A2A8F1D8F9A1500A1B2C3 /* Heimdall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heimdall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		001A2B001D8F9A2F00A1B2C2 /* HeimdallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeimdallApp.swift; sourceTree = "<group>"; };
 		001A2B011D8F9A2F00A1B2C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		001A2B021D8F9A2F00A1B2C2 /* DeviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStatus.swift; sourceTree = "<group>"; };
@@ -52,7 +54,6 @@
 		001A2B091D8F9A2F00A1B2C2 /* AVDService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVDService.swift; sourceTree = "<group>"; };
 		001A2B0A1D8F9A2F00A1B2C2 /* ADBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADBService.swift; sourceTree = "<group>"; };
 		001A2B0B1D8F9A2F00A1B2C2 /* ScrcpyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrcpyService.swift; sourceTree = "<group>"; };
-		001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBDeviceMonitor.swift; sourceTree = "<group>"; };
 		001A2B0C1D8F9A2F00A1B2C2 /* iOSSimulatorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSSimulatorsViewModel.swift; sourceTree = "<group>"; };
 		001A2B0D1D8F9A2F00A1B2C2 /* AndroidEmulatorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidEmulatorsViewModel.swift; sourceTree = "<group>"; };
 		001A2B0E1D8F9A2F00A1B2C2 /* DeviceMirroringViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMirroringViewModel.swift; sourceTree = "<group>"; };
@@ -69,10 +70,11 @@
 		001A2B191D8F9A2F00A1B2C2 /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 		001A2B1A1D8F9A2F00A1B2C2 /* StatusBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadgeView.swift; sourceTree = "<group>"; };
 		001A2B1B1D8F9A2F00A1B2C2 /* ActionButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonGroup.swift; sourceTree = "<group>"; };
-		001A2B1C1D8F9A2F00A1B2C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		001A2B1C1D8F9A2F00A1B2C2 /* Resources/Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		001A2B1D1D8F9A2F00A1B2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		001A2B1E1D8F9A2F00A1B2C2 /* Heimdall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Heimdall.entitlements; sourceTree = "<group>"; };
-		001A2A8F1D8F9A1500A1B2C3 /* Heimdall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heimdall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBDeviceMonitor.swift; sourceTree = "<group>"; };
+		E10A79A62F5C9C49007D9794 /* OpenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +113,7 @@
 				001A2B2A1D8F9A2F00A1B2C3 /* Services */,
 				001A2B341D8F9A2F00A1B2C3 /* ViewModels */,
 				001A2B3E1D8F9A2F00A1B2C3 /* Views */,
-				001A2B1C1D8F9A2F00A1B2C2 /* Assets.xcassets */,
+				001A2B1C1D8F9A2F00A1B2C2 /* Resources/Assets.xcassets */,
 				001A2B1D1D8F9A2F00A1B2C2 /* Info.plist */,
 				001A2B1E1D8F9A2F00A1B2C2 /* Heimdall.entitlements */,
 			);
@@ -135,6 +137,7 @@
 				001A2B061D8F9A2F00A1B2C2 /* ShellCommandRunner.swift */,
 				001A2B071D8F9A2F00A1B2C2 /* EnvironmentService.swift */,
 				001A2B081D8F9A2F00A1B2C2 /* SimctlService.swift */,
+				E10A79A62F5C9C49007D9794 /* OpenService.swift */,
 				001A2B091D8F9A2F00A1B2C2 /* AVDService.swift */,
 				001A2B0A1D8F9A2F00A1B2C2 /* ADBService.swift */,
 				001A2B0B1D8F9A2F00A1B2C2 /* ScrcpyService.swift */,
@@ -271,7 +274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				001A2B1C1D8F9A2F00A1B2C3 /* Assets.xcassets in Resources */,
+				001A2B1C1D8F9A2F00A1B2C3 /* Resources/Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +292,7 @@
 				001A2B041D8F9A2F00A1B2C3 /* AndroidEmulator.swift in Sources */,
 				001A2B051D8F9A2F00A1B2C3 /* AndroidDevice.swift in Sources */,
 				001A2B061D8F9A2F00A1B2C3 /* ShellCommandRunner.swift in Sources */,
+				E10A79A72F5C9C49007D9794 /* OpenService.swift in Sources */,
 				001A2B071D8F9A2F00A1B2C3 /* EnvironmentService.swift in Sources */,
 				001A2B081D8F9A2F00A1B2C3 /* SimctlService.swift in Sources */,
 				001A2B091D8F9A2F00A1B2C3 /* AVDService.swift in Sources */,
@@ -317,7 +321,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		/* Project-level Debug */
 		001A2AA41D8F9A1500A1B2C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -379,7 +382,6 @@
 			};
 			name = Debug;
 		};
-		/* Project-level Release */
 		001A2AA51D8F9A1500A1B2C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -434,7 +436,6 @@
 			};
 			name = Release;
 		};
-		/* Target-level Debug */
 		002B3CC41D8F9A1500A1B2C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -458,7 +459,6 @@
 			};
 			name = Debug;
 		};
-		/* Target-level Release */
 		002B3CC51D8F9A1500A1B2C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {

@@ -27,10 +27,12 @@ final class iOSSimulatorsViewModel {
     }
 
     private let service: SimctlService
+    private let openService: OpenService
     private var pollTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService? = nil) {
         self.service = SimctlService(environmentService: environmentService)
+        self.openService = OpenService()
     }
 
     // MARK: - Load
@@ -73,6 +75,7 @@ final class iOSSimulatorsViewModel {
     func boot(_ simulator: iOSSimulator) async {
         do {
             try await service.bootSimulator(udid: simulator.udid)
+            try await openService.openSimulator(udid: simulator.udid)
             await refresh()
         } catch {
             errorMessage = "Failed to boot \(simulator.name): \(error.localizedDescription)"
