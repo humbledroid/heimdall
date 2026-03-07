@@ -3,14 +3,12 @@ import SwiftUI
 // MARK: - iOS Simulators Tab
 
 struct iOSSimulatorsTabView: View {
-    let environmentService: EnvironmentService
+    let viewModel: iOSSimulatorsViewModel
 
-    @State private var viewModel: iOSSimulatorsViewModel?
     @State private var showCreateSheet = false
     @State private var searchText = ""
 
     private var filteredGroups: [(runtime: String, simulators: [iOSSimulator])] {
-        guard let viewModel else { return [] }
         if searchText.isEmpty {
             return viewModel.groupedSimulators
         }
@@ -24,58 +22,44 @@ struct iOSSimulatorsTabView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if let viewModel {
-                // Toolbar
-                toolbar(viewModel: viewModel)
+            // Toolbar
+            toolbar
 
-                // Error banner
-                if let error = viewModel.errorMessage {
-                    ErrorBanner(message: error) {
-                        viewModel.errorMessage = nil
-                    }
+            // Error banner
+            if let error = viewModel.errorMessage {
+                ErrorBanner(message: error) {
+                    viewModel.errorMessage = nil
                 }
+            }
 
-                // Content
-                if viewModel.isLoading && viewModel.simulators.isEmpty {
-                    ProgressView("Loading simulators...")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if viewModel.simulators.isEmpty {
-                    EmptyStateView(
-                        icon: "iphone.slash",
-                        title: "No Simulators",
-                        subtitle: "Create a new simulator to get started, or install runtimes via Xcode.",
-                        actionLabel: "Create New",
-                        action: { showCreateSheet = true }
-                    )
-                } else {
-                    simulatorList(viewModel: viewModel)
-                }
-            } else {
+            // Content
+            if viewModel.isLoading && viewModel.simulators.isEmpty {
                 ProgressView("Loading simulators...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if viewModel.simulators.isEmpty {
+                EmptyStateView(
+                    icon: "iphone.slash",
+                    title: "No Simulators",
+                    subtitle: "Create a new simulator to get started, or install runtimes via Xcode.",
+                    actionLabel: "Create New",
+                    action: { showCreateSheet = true }
+                )
+            } else {
+                simulatorList
             }
         }
-        .task {
-            let vm = iOSSimulatorsViewModel(environmentService: environmentService)
-            viewModel = vm
-            await vm.loadAll()
-        }
-        .onAppear { viewModel?.startPolling() }
-        .onDisappear { viewModel?.stopPolling() }
         .sheet(isPresented: $showCreateSheet) {
-            if let viewModel {
-                CreateSimulatorSheet(
-                    runtimes: viewModel.runtimes,
-                    deviceTypes: viewModel.deviceTypes
-                ) { name, deviceTypeId, runtimeId in
-                    Task {
-                        await viewModel.create(
-                            name: name,
-                            deviceTypeId: deviceTypeId,
-                            runtimeId: runtimeId
-                        )
-                        showCreateSheet = false
-                    }
+            CreateSimulatorSheet(
+                runtimes: viewModel.runtimes,
+                deviceTypes: viewModel.deviceTypes
+            ) { name, deviceTypeId, runtimeId in
+                Task {
+                    await viewModel.create(
+                        name: name,
+                        deviceTypeId: deviceTypeId,
+                        runtimeId: runtimeId
+                    )
+                    showCreateSheet = false
                 }
             }
         }
@@ -83,7 +67,7 @@ struct iOSSimulatorsTabView: View {
 
     // MARK: - Toolbar
 
-    private func toolbar(viewModel: iOSSimulatorsViewModel) -> some View {
+    private var toolbar: some View {
         HStack(spacing: 8) {
             // Search field
             HStack(spacing: 4) {
@@ -136,7 +120,7 @@ struct iOSSimulatorsTabView: View {
 
     // MARK: - Simulator List
 
-    private func simulatorList(viewModel: iOSSimulatorsViewModel) -> some View {
+    private var simulatorList: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                 ForEach(filteredGroups, id: \.runtime) { group in

@@ -3,58 +3,45 @@ import SwiftUI
 // MARK: - Device Mirroring Tab
 
 struct DeviceMirroringTabView: View {
+    let viewModel: DeviceMirroringViewModel
     let environmentService: EnvironmentService
-
-    @State private var viewModel: DeviceMirroringViewModel?
 
     var body: some View {
         VStack(spacing: 0) {
-            if let viewModel {
-                if !viewModel.isAvailable {
-                    EmptyStateView(
-                        icon: "cable.connector.slash",
-                        title: "adb Not Found",
-                        subtitle: "Configure the Android SDK path in Settings to detect connected devices."
-                    )
-                } else {
-                    // Error banner
-                    if let error = viewModel.errorMessage {
-                        ErrorBanner(message: error) {
-                            viewModel.errorMessage = nil
-                        }
-                    }
-
-                    // scrcpy warning
-                    if !environmentService.hasScrcpy {
-                        scrcpyWarning
-                    }
-
-                    // Content
-                    if viewModel.isLoading && viewModel.devices.isEmpty {
-                        ProgressView("Scanning for devices...")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else if viewModel.devices.isEmpty {
-                        EmptyStateView(
-                            icon: "cable.connector",
-                            title: "No Devices Connected",
-                            subtitle: "Connect an Android device via USB and enable USB debugging to get started."
-                        )
-                    } else {
-                        deviceList(viewModel: viewModel)
+            if !viewModel.isAvailable {
+                EmptyStateView(
+                    icon: "cable.connector.slash",
+                    title: "adb Not Found",
+                    subtitle: "Configure the Android SDK path in Settings to detect connected devices."
+                )
+            } else {
+                // Error banner
+                if let error = viewModel.errorMessage {
+                    ErrorBanner(message: error) {
+                        viewModel.errorMessage = nil
                     }
                 }
-            } else {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                // scrcpy warning
+                if !environmentService.hasScrcpy {
+                    scrcpyWarning
+                }
+
+                // Content
+                if viewModel.isLoading && viewModel.devices.isEmpty {
+                    ProgressView("Scanning for devices...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if viewModel.devices.isEmpty {
+                    EmptyStateView(
+                        icon: "cable.connector",
+                        title: "No Devices Connected",
+                        subtitle: "Connect an Android device via USB and enable USB debugging to get started."
+                    )
+                } else {
+                    deviceList
+                }
             }
         }
-        .task {
-            let vm = DeviceMirroringViewModel(environmentService: environmentService)
-            viewModel = vm
-            await vm.loadDevices()
-        }
-        .onAppear { viewModel?.startMonitoring() }
-        .onDisappear { viewModel?.stopMonitoring() }
     }
 
     // MARK: - scrcpy Warning
@@ -85,7 +72,7 @@ struct DeviceMirroringTabView: View {
 
     // MARK: - Device List
 
-    private func deviceList(viewModel: DeviceMirroringViewModel) -> some View {
+    private var deviceList: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 // Header
