@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001A2B001D8F9A2F00A1B2C3 /* HeimdallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B001D8F9A2F00A1B2C2; };
+		001A2B011D8F9A2F00A1B2C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B011D8F9A2F00A1B2C2; };
+		001A2B021D8F9A2F00A1B2C3 /* DeviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B021D8F9A2F00A1B2C2; };
+		001A2B031D8F9A2F00A1B2C3 /* iOSSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B031D8F9A2F00A1B2C2; };
+		001A2B041D8F9A2F00A1B2C3 /* AndroidEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B041D8F9A2F00A1B2C2; };
+		001A2B051D8F9A2F00A1B2C3 /* AndroidDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B051D8F9A2F00A1B2C2; };
+		001A2B061D8F9A2F00A1B2C3 /* ShellCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B061D8F9A2F00A1B2C2; };
+		001A2B071D8F9A2F00A1B2C3 /* EnvironmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B071D8F9A2F00A1B2C2; };
+		001A2B081D8F9A2F00A1B2C3 /* SimctlService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B081D8F9A2F00A1B2C2; };
+		001A2B091D8F9A2F00A1B2C3 /* AVDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B091D8F9A2F00A1B2C2; };
+		001A2B0A1D8F9A2F00A1B2C3 /* ADBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0A1D8F9A2F00A1B2C2; };
+		001A2B0B1D8F9A2F00A1B2C3 /* ScrcpyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0B1D8F9A2F00A1B2C2; };
+		001A2B1F1D8F9A2F00A1B2C3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1F1D8F9A2F00A1B2C2; };
+		001A2B0C1D8F9A2F00A1B2C3 /* iOSSimulatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0C1D8F9A2F00A1B2C2; };
+		001A2B0D1D8F9A2F00A1B2C3 /* AndroidEmulatorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0D1D8F9A2F00A1B2C2; };
+		001A2B0E1D8F9A2F00A1B2C3 /* DeviceMirroringViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0E1D8F9A2F00A1B2C2; };
+		001A2B0F1D8F9A2F00A1B2C3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B0F1D8F9A2F00A1B2C2; };
+		001A2B101D8F9A2F00A1B2C3 /* MainPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B101D8F9A2F00A1B2C2; };
+		001A2B111D8F9A2F00A1B2C3 /* iOSSimulatorsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B111D8F9A2F00A1B2C2; };
+		001A2B121D8F9A2F00A1B2C3 /* SimulatorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B121D8F9A2F00A1B2C2; };
+		001A2B131D8F9A2F00A1B2C3 /* CreateSimulatorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B131D8F9A2F00A1B2C2; };
+		001A2B141D8F9A2F00A1B2C3 /* AndroidEmulatorsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B141D8F9A2F00A1B2C2; };
+		001A2B151D8F9A2F00A1B2C3 /* EmulatorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B151D8F9A2F00A1B2C2; };
+		001A2B161D8F9A2F00A1B2C3 /* CreateEmulatorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B161D8F9A2F00A1B2C2; };
+		001A2B171D8F9A2F00A1B2C3 /* DeviceMirroringTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B171D8F9A2F00A1B2C2; };
+		001A2B181D8F9A2F00A1B2C3 /* DeviceRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B181D8F9A2F00A1B2C2; };
+		001A2B191D8F9A2F00A1B2C3 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B191D8F9A2F00A1B2C2; };
+		001A2B1A1D8F9A2F00A1B2C3 /* StatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1A1D8F9A2F00A1B2C2; };
+		001A2B1B1D8F9A2F00A1B2C3 /* ActionButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1B1D8F9A2F00A1B2C2; };
+		001A2B1C1D8F9A2F00A1B2C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 001A2B1C1D8F9A2F00A1B2C2; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		001A2B001D8F9A2F00A1B2C2 /* HeimdallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeimdallApp.swift; sourceTree = "<group>"; };
+		001A2B011D8F9A2F00A1B2C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		001A2B021D8F9A2F00A1B2C2 /* DeviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStatus.swift; sourceTree = "<group>"; };
+		001A2B031D8F9A2F00A1B2C2 /* iOSSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSSimulator.swift; sourceTree = "<group>"; };
+		001A2B041D8F9A2F00A1B2C2 /* AndroidEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidEmulator.swift; sourceTree = "<group>"; };
+		001A2B051D8F9A2F00A1B2C2 /* AndroidDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidDevice.swift; sourceTree = "<group>"; };
+		001A2B061D8F9A2F00A1B2C2 /* ShellCommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellCommandRunner.swift; sourceTree = "<group>"; };
+		001A2B071D8F9A2F00A1B2C2 /* EnvironmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentService.swift; sourceTree = "<group>"; };
+		001A2B081D8F9A2F00A1B2C2 /* SimctlService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimctlService.swift; sourceTree = "<group>"; };
+		001A2B091D8F9A2F00A1B2C2 /* AVDService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVDService.swift; sourceTree = "<group>"; };
+		001A2B0A1D8F9A2F00A1B2C2 /* ADBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADBService.swift; sourceTree = "<group>"; };
+		001A2B0B1D8F9A2F00A1B2C2 /* ScrcpyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrcpyService.swift; sourceTree = "<group>"; };
+		001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBDeviceMonitor.swift; sourceTree = "<group>"; };
+		001A2B0C1D8F9A2F00A1B2C2 /* iOSSimulatorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSSimulatorsViewModel.swift; sourceTree = "<group>"; };
+		001A2B0D1D8F9A2F00A1B2C2 /* AndroidEmulatorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidEmulatorsViewModel.swift; sourceTree = "<group>"; };
+		001A2B0E1D8F9A2F00A1B2C2 /* DeviceMirroringViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMirroringViewModel.swift; sourceTree = "<group>"; };
+		001A2B0F1D8F9A2F00A1B2C2 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		001A2B101D8F9A2F00A1B2C2 /* MainPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopoverView.swift; sourceTree = "<group>"; };
+		001A2B111D8F9A2F00A1B2C2 /* iOSSimulatorsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSSimulatorsTabView.swift; sourceTree = "<group>"; };
+		001A2B121D8F9A2F00A1B2C2 /* SimulatorRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorRowView.swift; sourceTree = "<group>"; };
+		001A2B131D8F9A2F00A1B2C2 /* CreateSimulatorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSimulatorSheet.swift; sourceTree = "<group>"; };
+		001A2B141D8F9A2F00A1B2C2 /* AndroidEmulatorsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidEmulatorsTabView.swift; sourceTree = "<group>"; };
+		001A2B151D8F9A2F00A1B2C2 /* EmulatorRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorRowView.swift; sourceTree = "<group>"; };
+		001A2B161D8F9A2F00A1B2C2 /* CreateEmulatorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmulatorSheet.swift; sourceTree = "<group>"; };
+		001A2B171D8F9A2F00A1B2C2 /* DeviceMirroringTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMirroringTabView.swift; sourceTree = "<group>"; };
+		001A2B181D8F9A2F00A1B2C2 /* DeviceRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRowView.swift; sourceTree = "<group>"; };
+		001A2B191D8F9A2F00A1B2C2 /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
+		001A2B1A1D8F9A2F00A1B2C2 /* StatusBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadgeView.swift; sourceTree = "<group>"; };
+		001A2B1B1D8F9A2F00A1B2C2 /* ActionButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonGroup.swift; sourceTree = "<group>"; };
+		001A2B1C1D8F9A2F00A1B2C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		001A2B1D1D8F9A2F00A1B2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		001A2B1E1D8F9A2F00A1B2C2 /* Heimdall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Heimdall.entitlements; sourceTree = "<group>"; };
+		001A2A8F1D8F9A1500A1B2C3 /* Heimdall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heimdall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		001A2A8C1D8F9A1500A1B2C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		001A2A7F1D8F9A1500A1B2C3 = {
+			isa = PBXGroup;
+			children = (
+				001A2A8A1D8F9A1500A1B2C3 /* Heimdall */,
+				001A2A891D8F9A1500A1B2C3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		001A2A891D8F9A1500A1B2C3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				001A2A8F1D8F9A1500A1B2C3 /* Heimdall.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		001A2A8A1D8F9A1500A1B2C3 /* Heimdall */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B001D8F9A2F00A1B2C2 /* HeimdallApp.swift */,
+				001A2B011D8F9A2F00A1B2C2 /* AppDelegate.swift */,
+				001A2B201D8F9A2F00A1B2C3 /* Models */,
+				001A2B2A1D8F9A2F00A1B2C3 /* Services */,
+				001A2B341D8F9A2F00A1B2C3 /* ViewModels */,
+				001A2B3E1D8F9A2F00A1B2C3 /* Views */,
+				001A2B1C1D8F9A2F00A1B2C2 /* Assets.xcassets */,
+				001A2B1D1D8F9A2F00A1B2C2 /* Info.plist */,
+				001A2B1E1D8F9A2F00A1B2C2 /* Heimdall.entitlements */,
+			);
+			path = Heimdall;
+			sourceTree = "<group>";
+		};
+		001A2B201D8F9A2F00A1B2C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B021D8F9A2F00A1B2C2 /* DeviceStatus.swift */,
+				001A2B031D8F9A2F00A1B2C2 /* iOSSimulator.swift */,
+				001A2B041D8F9A2F00A1B2C2 /* AndroidEmulator.swift */,
+				001A2B051D8F9A2F00A1B2C2 /* AndroidDevice.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		001A2B2A1D8F9A2F00A1B2C3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B061D8F9A2F00A1B2C2 /* ShellCommandRunner.swift */,
+				001A2B071D8F9A2F00A1B2C2 /* EnvironmentService.swift */,
+				001A2B081D8F9A2F00A1B2C2 /* SimctlService.swift */,
+				001A2B091D8F9A2F00A1B2C2 /* AVDService.swift */,
+				001A2B0A1D8F9A2F00A1B2C2 /* ADBService.swift */,
+				001A2B0B1D8F9A2F00A1B2C2 /* ScrcpyService.swift */,
+				001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		001A2B341D8F9A2F00A1B2C3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B0C1D8F9A2F00A1B2C2 /* iOSSimulatorsViewModel.swift */,
+				001A2B0D1D8F9A2F00A1B2C2 /* AndroidEmulatorsViewModel.swift */,
+				001A2B0E1D8F9A2F00A1B2C2 /* DeviceMirroringViewModel.swift */,
+				001A2B0F1D8F9A2F00A1B2C2 /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		001A2B3E1D8F9A2F00A1B2C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B101D8F9A2F00A1B2C2 /* MainPopoverView.swift */,
+				001A2B461D8F9A2F00A1B2C3 /* iOS */,
+				001A2B501D8F9A2F00A1B2C3 /* Android */,
+				001A2B5A1D8F9A2F00A1B2C3 /* Devices */,
+				001A2B641D8F9A2F00A1B2C3 /* Settings */,
+				001A2B6E1D8F9A2F00A1B2C3 /* Shared */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		001A2B461D8F9A2F00A1B2C3 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B111D8F9A2F00A1B2C2 /* iOSSimulatorsTabView.swift */,
+				001A2B121D8F9A2F00A1B2C2 /* SimulatorRowView.swift */,
+				001A2B131D8F9A2F00A1B2C2 /* CreateSimulatorSheet.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		001A2B501D8F9A2F00A1B2C3 /* Android */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B141D8F9A2F00A1B2C2 /* AndroidEmulatorsTabView.swift */,
+				001A2B151D8F9A2F00A1B2C2 /* EmulatorRowView.swift */,
+				001A2B161D8F9A2F00A1B2C2 /* CreateEmulatorSheet.swift */,
+			);
+			path = Android;
+			sourceTree = "<group>";
+		};
+		001A2B5A1D8F9A2F00A1B2C3 /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B171D8F9A2F00A1B2C2 /* DeviceMirroringTabView.swift */,
+				001A2B181D8F9A2F00A1B2C2 /* DeviceRowView.swift */,
+			);
+			path = Devices;
+			sourceTree = "<group>";
+		};
+		001A2B641D8F9A2F00A1B2C3 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B191D8F9A2F00A1B2C2 /* SettingsSheet.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		001A2B6E1D8F9A2F00A1B2C3 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				001A2B1A1D8F9A2F00A1B2C2 /* StatusBadgeView.swift */,
+				001A2B1B1D8F9A2F00A1B2C2 /* ActionButtonGroup.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		001A2A8E1D8F9A1500A1B2C3 /* Heimdall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 001A2AA31D8F9A1500A1B2C3 /* Build configuration list for PBXNativeTarget "Heimdall" */;
+			buildPhases = (
+				001A2A8B1D8F9A1500A1B2C3 /* Sources */,
+				001A2A8C1D8F9A1500A1B2C3 /* Frameworks */,
+				001A2A8D1D8F9A1500A1B2C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Heimdall;
+			productName = Heimdall;
+			productReference = 001A2A8F1D8F9A1500A1B2C3 /* Heimdall.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		001A2A801D8F9A1500A1B2C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					001A2A8E1D8F9A1500A1B2C3 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = 001A2A831D8F9A1500A1B2C3 /* Build configuration list for PBXProject "Heimdall" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 001A2A7F1D8F9A1500A1B2C3;
+			productRefGroup = 001A2A891D8F9A1500A1B2C3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				001A2A8E1D8F9A1500A1B2C3 /* Heimdall */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		001A2A8D1D8F9A1500A1B2C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001A2B1C1D8F9A2F00A1B2C3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		001A2A8B1D8F9A1500A1B2C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001A2B001D8F9A2F00A1B2C3 /* HeimdallApp.swift in Sources */,
+				001A2B011D8F9A2F00A1B2C3 /* AppDelegate.swift in Sources */,
+				001A2B021D8F9A2F00A1B2C3 /* DeviceStatus.swift in Sources */,
+				001A2B031D8F9A2F00A1B2C3 /* iOSSimulator.swift in Sources */,
+				001A2B041D8F9A2F00A1B2C3 /* AndroidEmulator.swift in Sources */,
+				001A2B051D8F9A2F00A1B2C3 /* AndroidDevice.swift in Sources */,
+				001A2B061D8F9A2F00A1B2C3 /* ShellCommandRunner.swift in Sources */,
+				001A2B071D8F9A2F00A1B2C3 /* EnvironmentService.swift in Sources */,
+				001A2B081D8F9A2F00A1B2C3 /* SimctlService.swift in Sources */,
+				001A2B091D8F9A2F00A1B2C3 /* AVDService.swift in Sources */,
+				001A2B0A1D8F9A2F00A1B2C3 /* ADBService.swift in Sources */,
+				001A2B1F1D8F9A2F00A1B2C3 /* USBDeviceMonitor.swift in Sources */,
+				001A2B0B1D8F9A2F00A1B2C3 /* ScrcpyService.swift in Sources */,
+				001A2B0C1D8F9A2F00A1B2C3 /* iOSSimulatorsViewModel.swift in Sources */,
+				001A2B0D1D8F9A2F00A1B2C3 /* AndroidEmulatorsViewModel.swift in Sources */,
+				001A2B0E1D8F9A2F00A1B2C3 /* DeviceMirroringViewModel.swift in Sources */,
+				001A2B0F1D8F9A2F00A1B2C3 /* SettingsViewModel.swift in Sources */,
+				001A2B101D8F9A2F00A1B2C3 /* MainPopoverView.swift in Sources */,
+				001A2B111D8F9A2F00A1B2C3 /* iOSSimulatorsTabView.swift in Sources */,
+				001A2B121D8F9A2F00A1B2C3 /* SimulatorRowView.swift in Sources */,
+				001A2B131D8F9A2F00A1B2C3 /* CreateSimulatorSheet.swift in Sources */,
+				001A2B141D8F9A2F00A1B2C3 /* AndroidEmulatorsTabView.swift in Sources */,
+				001A2B151D8F9A2F00A1B2C3 /* EmulatorRowView.swift in Sources */,
+				001A2B161D8F9A2F00A1B2C3 /* CreateEmulatorSheet.swift in Sources */,
+				001A2B171D8F9A2F00A1B2C3 /* DeviceMirroringTabView.swift in Sources */,
+				001A2B181D8F9A2F00A1B2C3 /* DeviceRowView.swift in Sources */,
+				001A2B191D8F9A2F00A1B2C3 /* SettingsSheet.swift in Sources */,
+				001A2B1A1D8F9A2F00A1B2C3 /* StatusBadgeView.swift in Sources */,
+				001A2B1B1D8F9A2F00A1B2C3 /* ActionButtonGroup.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		/* Project-level Debug */
+		001A2AA41D8F9A1500A1B2C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_DIALECT = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_DIALECT = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		/* Project-level Release */
+		001A2AA51D8F9A1500A1B2C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_DIALECT = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_DIALECT = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		/* Target-level Debug */
+		002B3CC41D8F9A1500A1B2C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Heimdall/Heimdall.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Heimdall/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heimdall.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		/* Target-level Release */
+		002B3CC51D8F9A1500A1B2C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Heimdall/Heimdall.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Heimdall/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heimdall.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		001A2A831D8F9A1500A1B2C3 /* Build configuration list for PBXProject "Heimdall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				001A2AA41D8F9A1500A1B2C3 /* Debug */,
+				001A2AA51D8F9A1500A1B2C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		001A2AA31D8F9A1500A1B2C3 /* Build configuration list for PBXNativeTarget "Heimdall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002B3CC41D8F9A1500A1B2C3 /* Debug */,
+				002B3CC51D8F9A1500A1B2C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 001A2A801D8F9A1500A1B2C3 /* Project object */;
+}
