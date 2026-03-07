@@ -111,7 +111,7 @@ struct MainPopoverView: View {
     private var header: some View {
         VStack(spacing: 10) {
             HStack {
-                Image(systemName: "antenna.radiowaves.left.and.right")
+                Image(systemName: "iphone.gen1.motion")
                     .font(.title3)
                     .foregroundStyle(.primary)
                 Text("Heimdall")
