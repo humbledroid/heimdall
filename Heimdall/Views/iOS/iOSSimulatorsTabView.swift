@@ -1,0 +1,166 @@
+import SwiftUI
+
+// MARK: - iOS Simulators Tab
+
+struct iOSSimulatorsTabView: View {
+    let environmentService: EnvironmentService
+
+    @State private var viewModel: iOSSimulatorsViewModel?
+    @State private var showCreateSheet = false
+    @State private var searchText = ""
+
+    private var filteredGroups: [(runtime: String, simulators: [iOSSimulator])] {
+        guard let viewModel else { return [] }
+        if searchText.isEmpty {
+            return viewModel.groupedSimulators
+        }
+        return viewModel.groupedSimulators.compactMap { group in
+            let filtered = group.simulators.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText)
+            }
+            return filtered.isEmpty ? nil : (runtime: group.runtime, simulators: filtered)
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            if let viewModel {
+                // Toolbar
+                toolbar(viewModel: viewModel)
+
+                // Error banner
+                if let error = viewModel.errorMessage {
+                    ErrorBanner(message: error) {
+                        viewModel.errorMessage = nil
+                    }
+                }
+
+                // Content
+                if viewModel.isLoading && viewModel.simulators.isEmpty {
+                    ProgressView("Loading simulators...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if viewModel.simulators.isEmpty {
+                    EmptyStateView(
+                        icon: "iphone.slash",
+                        title: "No Simulators",
+                        subtitle: "Create a new simulator to get started, or install runtimes via Xcode.",
+                        actionLabel: "Create New",
+                        action: { showCreateSheet = true }
+                    )
+                } else {
+                    simulatorList(viewModel: viewModel)
+                }
+            } else {
+                ProgressView("Loading simulators...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .task {
+            let vm = iOSSimulatorsViewModel(environmentService: environmentService)
+            viewModel = vm
+            await vm.loadAll()
+        }
+        .onAppear { viewModel?.startPolling() }
+        .onDisappear { viewModel?.stopPolling() }
+        .sheet(isPresented: $showCreateSheet) {
+            if let viewModel {
+                CreateSimulatorSheet(
+                    runtimes: viewModel.runtimes,
+                    deviceTypes: viewModel.deviceTypes
+                ) { name, deviceTypeId, runtimeId in
+                    Task {
+                        await viewModel.create(
+                            name: name,
+                            deviceTypeId: deviceTypeId,
+                            runtimeId: runtimeId
+                        )
+                        showCreateSheet = false
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Toolbar
+
+    private func toolbar(viewModel: iOSSimulatorsViewModel) -> some View {
+        HStack(spacing: 8) {
+            // Search field
+            HStack(spacing: 4) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.tertiary)
+                    .font(.caption)
+                TextField("Search...", text: $searchText)
+                    .textFieldStyle(.plain)
+                    .font(.caption)
+                if !searchText.isEmpty {
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.caption2)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.tertiary)
+                }
+            }
+            .padding(6)
+            .background(Color(nsColor: .controlBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+
+            // Running count
+            if viewModel.runningCount > 0 {
+                Text("\(viewModel.runningCount) running")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.green.opacity(0.15))
+                    .clipShape(Capsule())
+            }
+
+            // Create button
+            Button {
+                showCreateSheet = true
+            } label: {
+                Image(systemName: "plus")
+                    .font(.caption)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+            .help("Create new simulator")
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+    }
+
+    // MARK: - Simulator List
+
+    private func simulatorList(viewModel: iOSSimulatorsViewModel) -> some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                ForEach(filteredGroups, id: \.runtime) { group in
+                    Section {
+                        ForEach(group.simulators) { simulator in
+                            SimulatorRowView(
+                                simulator: simulator,
+                                viewModel: viewModel
+                            )
+                            Divider()
+                                .padding(.leading, 44)
+                        }
+                    } header: {
+                        Text(group.runtime)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(.ultraThinMaterial)
+                    }
+                }
+            }
+        }
+    }
+}
