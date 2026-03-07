@@ -11,7 +11,7 @@ final class USBDeviceMonitor: @unchecked Sendable {
     private let environmentService: EnvironmentService
     private let queue = DispatchQueue(label: "com.heimdall.usb-monitor")
     private var process: Process?
-    private var isRunning = false
+    private var _isRunning = false
 
     enum DeviceEvent: Sendable {
         case changed
@@ -22,13 +22,14 @@ final class USBDeviceMonitor: @unchecked Sendable {
     }
 
     deinit {
-        stopMonitoring()
+        // Don't use queue.sync in deinit — just terminate directly
+        process?.terminate()
     }
 
     /// Start monitoring device events. Returns an AsyncStream that emits
     /// events whenever the device list changes.
     func startMonitoring() -> AsyncStream<DeviceEvent> {
-        // Stop any existing monitor first
+        // Stop any existing monitor first (non-blocking)
         stopMonitoring()
 
         guard let adbPath = environmentService.adbPath else {
@@ -36,59 +37,89 @@ final class USBDeviceMonitor: @unchecked Sendable {
             return AsyncStream { $0.finish() }
         }
 
+        print("[Heimdall:USB] Starting monitor with adb at: \(adbPath)")
+
         return AsyncStream { [weak self] continuation in
             guard let self else {
                 continuation.finish()
                 return
             }
 
-            self.queue.async {
+            self.queue.async { [weak self] in
+                guard let self else {
+                    continuation.finish()
+                    return
+                }
+
                 // 1. Ensure adb server is running first
                 self.startADBServer(adbPath: adbPath)
 
                 // 2. Launch adb track-devices
-                let process = Process()
+                let proc = Process()
                 let outputPipe = Pipe()
+                let errorPipe = Pipe()
 
-                process.executableURL = URL(fileURLWithPath: adbPath)
-                process.arguments = ["track-devices"]
-                process.standardOutput = outputPipe
-                process.standardError = FileHandle.nullDevice
+                proc.executableURL = URL(fileURLWithPath: adbPath)
+                proc.arguments = ["track-devices"]
+                proc.standardOutput = outputPipe
+                proc.standardError = errorPipe
 
-                // Set up environment
+                // Build environment with proper PATH
                 var env = ProcessInfo.processInfo.environment
                 let extraPaths = ["/usr/local/bin", "/opt/homebrew/bin", "/usr/bin", "/bin"]
                 let existingPath = env["PATH"] ?? "/usr/bin:/bin"
-                env["PATH"] = (extraPaths + existingPath.components(separatedBy: ":"))
-                    .joined(separator: ":")
-                process.environment = env
+                let allPaths = (extraPaths + existingPath.components(separatedBy: ":"))
+                env["PATH"] = allPaths.joined(separator: ":")
 
-                self.process = process
-                self.isRunning = true
+                // Also set ANDROID_HOME / ANDROID_SDK_ROOT if we know them
+                if let sdkRoot = self.environmentService.androidSDKPath {
+                    env["ANDROID_HOME"] = sdkRoot
+                    env["ANDROID_SDK_ROOT"] = sdkRoot
+                }
+                proc.environment = env
+
+                self.process = proc
+                self._isRunning = true
 
                 // Handle output — each chunk from track-devices means device list changed
                 let fileHandle = outputPipe.fileHandleForReading
-                fileHandle.readabilityHandler = { handle in
+                fileHandle.readabilityHandler = { [weak self] handle in
                     let data = handle.availableData
                     guard !data.isEmpty else {
                         // EOF — process ended
                         print("[Heimdall:USB] track-devices EOF")
+                        fileHandle.readabilityHandler = nil
                         return
                     }
 
-                    let output = String(data: data, encoding: .utf8) ?? ""
-                    let trimmed = output.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if !trimmed.isEmpty {
-                        print("[Heimdall:USB] Device change detected: \(trimmed)")
+                    if let output = String(data: data, encoding: .utf8) {
+                        let trimmed = output.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !trimmed.isEmpty {
+                            print("[Heimdall:USB] Device change detected: \(trimmed.prefix(200))")
+                        }
                     }
                     continuation.yield(.changed)
                 }
 
-                process.terminationHandler = { [weak self] proc in
-                    print("[Heimdall:USB] track-devices terminated (status: \(proc.terminationStatus))")
+                // Read stderr for diagnostics
+                let stderrHandle = errorPipe.fileHandleForReading
+                stderrHandle.readabilityHandler = { handle in
+                    let data = handle.availableData
+                    guard !data.isEmpty else { return }
+                    if let text = String(data: data, encoding: .utf8) {
+                        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !trimmed.isEmpty {
+                            print("[Heimdall:USB] stderr: \(trimmed)")
+                        }
+                    }
+                }
+
+                proc.terminationHandler = { [weak self] terminatedProc in
+                    print("[Heimdall:USB] track-devices terminated (status: \(terminatedProc.terminationStatus))")
                     fileHandle.readabilityHandler = nil
+                    stderrHandle.readabilityHandler = nil
                     self?.queue.async {
-                        self?.isRunning = false
+                        self?._isRunning = false
                         self?.process = nil
                     }
                     continuation.finish()
@@ -96,17 +127,17 @@ final class USBDeviceMonitor: @unchecked Sendable {
 
                 // Handle stream cancellation
                 continuation.onTermination = { @Sendable _ in
-                    if process.isRunning {
-                        process.terminate()
+                    if proc.isRunning {
+                        proc.terminate()
                     }
                 }
 
                 do {
-                    try process.run()
-                    print("[Heimdall:USB] Started adb track-devices (PID: \(process.processIdentifier))")
+                    try proc.run()
+                    print("[Heimdall:USB] Started adb track-devices (PID: \(proc.processIdentifier))")
                 } catch {
                     print("[Heimdall:USB] Failed to start track-devices: \(error)")
-                    self.isRunning = false
+                    self._isRunning = false
                     self.process = nil
                     continuation.finish()
                 }
@@ -116,39 +147,43 @@ final class USBDeviceMonitor: @unchecked Sendable {
 
     /// Stop monitoring device events.
     func stopMonitoring() {
-        queue.sync {
-            if let process, process.isRunning {
-                process.terminate()
+        // Use async dispatch to avoid deadlock if called from within the queue
+        queue.async { [weak self] in
+            guard let self else { return }
+            if let proc = self.process, proc.isRunning {
+                proc.terminate()
                 print("[Heimdall:USB] Stopped device monitor")
             }
-            process = nil
-            isRunning = false
+            self.process = nil
+            self._isRunning = false
         }
     }
 
     // MARK: - Private
 
     /// Start the adb server if it's not already running.
-    /// This is synchronous and quick — adb start-server returns immediately
-    /// if the server is already up.
     private func startADBServer(adbPath: String) {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: adbPath)
-        process.arguments = ["start-server"]
-        process.standardOutput = FileHandle.nullDevice
-        process.standardError = FileHandle.nullDevice
+        let proc = Process()
+        proc.executableURL = URL(fileURLWithPath: adbPath)
+        proc.arguments = ["start-server"]
+        proc.standardOutput = FileHandle.nullDevice
+        proc.standardError = FileHandle.nullDevice
 
         var env = ProcessInfo.processInfo.environment
         let extraPaths = ["/usr/local/bin", "/opt/homebrew/bin", "/usr/bin", "/bin"]
         let existingPath = env["PATH"] ?? "/usr/bin:/bin"
         env["PATH"] = (extraPaths + existingPath.components(separatedBy: ":"))
             .joined(separator: ":")
-        process.environment = env
+        if let sdkRoot = environmentService.androidSDKPath {
+            env["ANDROID_HOME"] = sdkRoot
+            env["ANDROID_SDK_ROOT"] = sdkRoot
+        }
+        proc.environment = env
 
         do {
-            try process.run()
-            process.waitUntilExit()
-            print("[Heimdall:USB] adb server started (status: \(process.terminationStatus))")
+            try proc.run()
+            proc.waitUntilExit()
+            print("[Heimdall:USB] adb server started (status: \(proc.terminationStatus))")
         } catch {
             print("[Heimdall:USB] Failed to start adb server: \(error)")
         }

@@ -147,16 +147,26 @@ final class DeviceMirroringViewModel {
     // MARK: - USB Monitoring
 
     /// Start real-time USB monitoring via `adb track-devices`.
-    /// Falls back to polling if the monitor cannot be started.
+    /// Falls back to polling if the monitor cannot be started or if adb is unavailable.
     func startMonitoring() {
         monitorTask?.cancel()
+
+        // If adb isn't available, just use polling directly
+        guard environmentService.adbPath != nil else {
+            print("[Heimdall:USB] adb not found, using polling fallback")
+            startPolling()
+            return
+        }
+
         monitorTask = Task { [weak self] in
             guard let self else { return }
 
             let events = self.usbMonitor.startMonitoring()
+            var receivedAnyEvent = false
 
             for await event in events {
                 guard !Task.isCancelled else { break }
+                receivedAnyEvent = true
                 switch event {
                 case .changed:
                     print("[Heimdall:USB] Device change event — refreshing")
@@ -166,7 +176,11 @@ final class DeviceMirroringViewModel {
 
             // If the monitor stream ends (adb died, etc.), fall back to polling
             if !Task.isCancelled {
-                print("[Heimdall:USB] Monitor stream ended, falling back to polling")
+                if receivedAnyEvent {
+                    print("[Heimdall:USB] Monitor stream ended after receiving events, falling back to polling")
+                } else {
+                    print("[Heimdall:USB] Monitor stream ended without any events (adb issue?), falling back to polling")
+                }
                 self.startPolling()
             }
         }
