@@ -92,30 +92,35 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     /// Open a log viewer window for a given device/emulator.
     /// Re-uses existing windows for the same serial.
+    /// Deferred to next run-loop tick so the popover can settle first.
     func openLogViewer(deviceName: String, serial: String) {
+        // Reuse existing window
         if let existing = logViewerWindows[serial] {
+            NSApp.setActivationPolicy(.regular)
             existing.window?.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
             return
         }
 
-        let controller = LogViewerWindowController(
-            deviceName: deviceName,
-            serial: serial,
-            environmentService: environmentService
-        )
+        // Defer window creation so the transient popover can dismiss cleanly
+        DispatchQueue.main.async { [self] in
+            let controller = LogViewerWindowController(
+                deviceName: deviceName,
+                serial: serial,
+                environmentService: environmentService
+            )
 
-        // Clean up reference when window closes
-        controller.window?.delegate = self
-        logViewerWindows[serial] = controller
+            // Clean up reference when window closes
+            controller.window?.delegate = self
+            logViewerWindows[serial] = controller
 
-        // Switch to regular app so standalone windows can appear
-        if NSApp.activationPolicy() != .regular {
+            // Switch to regular app so standalone windows can appear
             NSApp.setActivationPolicy(.regular)
-        }
 
-        controller.showWindow(nil)
-        NSApp.activate(ignoringOtherApps: true)
+            controller.showWindow(nil)
+            controller.window?.orderFrontRegardless()
+            NSApp.activate(ignoringOtherApps: true)
+        }
     }
 
     // MARK: - Event Monitor
