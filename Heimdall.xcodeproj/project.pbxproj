@@ -43,6 +43,11 @@
 		E30C99B12F5D2B4200C3D4E5 /* AppInstallerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30C99B02F5D2B4200C3D4E5 /* AppInstallerService.swift */; };
 		E40D00C12F5D3C5300D4E5F6 /* WirelessADBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D00C02F5D3C5300D4E5F6 /* WirelessADBService.swift */; };
 		E40D00C32F5D3C5300D4E5F6 /* WirelessPairingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D00C22F5D3C5300D4E5F6 /* WirelessPairingSheet.swift */; };
+		E50E11D12F5D4D6400E5F6A7 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E11D02F5D4D6400E5F6A7 /* LogEntry.swift */; };
+		E50E11D32F5D4D6400E5F6A7 /* LogcatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E11D22F5D4D6400E5F6A7 /* LogcatService.swift */; };
+		E50E11D52F5D4D6400E5F6A7 /* LogViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E11D42F5D4D6400E5F6A7 /* LogViewerViewModel.swift */; };
+		E50E11D72F5D4D6400E5F6A7 /* LogViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E11D62F5D4D6400E5F6A7 /* LogViewerView.swift */; };
+		E50E11D92F5D4D6400E5F6A7 /* LogViewerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E11D82F5D4D6400E5F6A7 /* LogViewerWindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +90,11 @@
 		E30C99B02F5D2B4200C3D4E5 /* AppInstallerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInstallerService.swift; sourceTree = "<group>"; };
 		E40D00C02F5D3C5300D4E5F6 /* WirelessADBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WirelessADBService.swift; sourceTree = "<group>"; };
 		E40D00C22F5D3C5300D4E5F6 /* WirelessPairingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WirelessPairingSheet.swift; sourceTree = "<group>"; };
+		E50E11D02F5D4D6400E5F6A7 /* LogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
+		E50E11D22F5D4D6400E5F6A7 /* LogcatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogcatService.swift; sourceTree = "<group>"; };
+		E50E11D42F5D4D6400E5F6A7 /* LogViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerViewModel.swift; sourceTree = "<group>"; };
+		E50E11D62F5D4D6400E5F6A7 /* LogViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerView.swift; sourceTree = "<group>"; };
+		E50E11D82F5D4D6400E5F6A7 /* LogViewerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +147,7 @@
 				001A2B031D8F9A2F00A1B2C2 /* iOSSimulator.swift */,
 				001A2B041D8F9A2F00A1B2C2 /* AndroidEmulator.swift */,
 				001A2B051D8F9A2F00A1B2C2 /* AndroidDevice.swift */,
+				E50E11D02F5D4D6400E5F6A7 /* LogEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -155,6 +166,7 @@
 				E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */,
 				E30C99B02F5D2B4200C3D4E5 /* AppInstallerService.swift */,
 				E40D00C02F5D3C5300D4E5F6 /* WirelessADBService.swift */,
+				E50E11D22F5D4D6400E5F6A7 /* LogcatService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -166,6 +178,7 @@
 				001A2B0D1D8F9A2F00A1B2C2 /* AndroidEmulatorsViewModel.swift */,
 				001A2B0E1D8F9A2F00A1B2C2 /* DeviceMirroringViewModel.swift */,
 				001A2B0F1D8F9A2F00A1B2C2 /* SettingsViewModel.swift */,
+				E50E11D42F5D4D6400E5F6A7 /* LogViewerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -178,6 +191,7 @@
 				001A2B501D8F9A2F00A1B2C3 /* Android */,
 				001A2B5A1D8F9A2F00A1B2C3 /* Devices */,
 				001A2B641D8F9A2F00A1B2C3 /* Settings */,
+				E50E11DA1D8F9A2F00A1B2C3 /* LogViewer */,
 				001A2B6E1D8F9A2F00A1B2C3 /* Shared */,
 			);
 			path = Views;
@@ -219,6 +233,15 @@
 				001A2B191D8F9A2F00A1B2C2 /* SettingsSheet.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		E50E11DA1D8F9A2F00A1B2C3 /* LogViewer */ = {
+			isa = PBXGroup;
+			children = (
+				E50E11D62F5D4D6400E5F6A7 /* LogViewerView.swift */,
+				E50E11D82F5D4D6400E5F6A7 /* LogViewerWindowController.swift */,
+			);
+			path = LogViewer;
 			sourceTree = "<group>";
 		};
 		001A2B6E1D8F9A2F00A1B2C3 /* Shared */ = {
@@ -335,6 +358,11 @@
 				E30C99B12F5D2B4200C3D4E5 /* AppInstallerService.swift in Sources */,
 				E40D00C12F5D3C5300D4E5F6 /* WirelessADBService.swift in Sources */,
 				E40D00C32F5D3C5300D4E5F6 /* WirelessPairingSheet.swift in Sources */,
+				E50E11D12F5D4D6400E5F6A7 /* LogEntry.swift in Sources */,
+				E50E11D32F5D4D6400E5F6A7 /* LogcatService.swift in Sources */,
+				E50E11D52F5D4D6400E5F6A7 /* LogViewerViewModel.swift in Sources */,
+				E50E11D72F5D4D6400E5F6A7 /* LogViewerView.swift in Sources */,
+				E50E11D92F5D4D6400E5F6A7 /* LogViewerWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

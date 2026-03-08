@@ -1,10 +1,11 @@
 import AppKit
 import SwiftUI
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
     private var eventMonitor: Any?
+    private var logViewerWindows: [String: LogViewerWindowController] = []
 
     // Shared environment service for the entire app
     let environmentService = EnvironmentService()
@@ -87,6 +88,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.terminate(nil)
     }
 
+    // MARK: - Log Viewer
+
+    /// Open a log viewer window for a given device/emulator.
+    /// Re-uses existing windows for the same serial.
+    func openLogViewer(deviceName: String, serial: String) {
+        if let existing = logViewerWindows[serial] {
+            existing.window?.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        let controller = LogViewerWindowController(
+            deviceName: deviceName,
+            serial: serial,
+            environmentService: environmentService
+        )
+
+        // Clean up reference when window closes
+        controller.window?.delegate = self
+        logViewerWindows[serial] = controller
+
+        controller.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
     // MARK: - Event Monitor
 
     private func setupEventMonitor() {
@@ -97,6 +123,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 popover.performClose(nil)
             }
         }
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow else { return }
+        // Remove the log viewer controller for this window
+        logViewerWindows = logViewerWindows.filter { $0.value.window !== window }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

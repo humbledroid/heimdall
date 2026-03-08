@@ -119,6 +119,11 @@ final class AndroidEmulatorsViewModel {
         }
     }
 
+    /// Resolve the adb serial for an emulator (e.g. "emulator-5554").
+    func resolveSerial(for emulator: AndroidEmulator) async throws -> String {
+        try await avdService.serialForEmulator(name: emulator.name)
+    }
+
     /// Install an APK on a running emulator.
     func installApp(on emulator: AndroidEmulator, apkPath: String) async {
         guard emulator.status == .booted else {

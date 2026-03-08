@@ -8,6 +8,7 @@ struct DeviceRowView: View {
     let hasScrcpy: Bool
     var onOpenLink: ((AndroidDevice) -> Void)?
     var onInstallApp: ((AndroidDevice) -> Void)?
+    var onOpenLogs: ((AndroidDevice) -> Void)?
 
     @State private var isMirroring = false
     @State private var isHovered = false
@@ -66,6 +67,19 @@ struct DeviceRowView: View {
                     .buttonStyle(.bordered)
                     .controlSize(.small)
                     .help("Open Deep Link")
+                }
+
+                // Logs button
+                if let onOpenLogs {
+                    Button {
+                        onOpenLogs(device)
+                    } label: {
+                        Image(systemName: "text.alignleft")
+                            .font(.caption)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .help("View Logs")
                 }
 
                 // Mirror button

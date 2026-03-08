@@ -157,6 +157,23 @@ struct AndroidEmulatorsTabView: View {
         .padding(.vertical, 8)
     }
 
+    // MARK: - Log Viewer
+
+    private func openLogViewer(for emulator: AndroidEmulator) {
+        guard emulator.status == .booted else { return }
+        // Resolve the emulator serial and open log viewer via AppDelegate
+        Task {
+            do {
+                let serial = try await viewModel.resolveSerial(for: emulator)
+                if let appDelegate = NSApp.delegate as? AppDelegate {
+                    appDelegate.openLogViewer(deviceName: emulator.name, serial: serial)
+                }
+            } catch {
+                viewModel.errorMessage = "Could not resolve emulator serial: \(error.localizedDescription)"
+            }
+        }
+    }
+
     // MARK: - Install App
 
     private func pickAndInstallApp(for emulator: AndroidEmulator) {
@@ -190,6 +207,9 @@ struct AndroidEmulatorsTabView: View {
                         },
                         onInstallApp: { emu in
                             pickAndInstallApp(for: emu)
+                        },
+                        onOpenLogs: { emu in
+                            openLogViewer(for: emu)
                         }
                     )
                     Divider()

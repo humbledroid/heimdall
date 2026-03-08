@@ -12,6 +12,7 @@ struct ActionButtonGroup: View {
     var onDelete: (() -> Void)?
     var onOpenLink: (() -> Void)?
     var onInstallApp: (() -> Void)?
+    var onOpenLogs: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 4) {
@@ -65,7 +66,15 @@ struct ActionButtonGroup: View {
                         }
                     }
 
-                    if onOpenLink != nil || onInstallApp != nil {
+                    if let onOpenLogs {
+                        Button {
+                            onOpenLogs()
+                        } label: {
+                            Label("View Logs", systemImage: "text.alignleft")
+                        }
+                    }
+
+                    if onOpenLink != nil || onInstallApp != nil || onOpenLogs != nil {
                         Divider()
                     }
                 }

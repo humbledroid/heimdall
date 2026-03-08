@@ -180,6 +180,11 @@ struct DeviceMirroringTabView: View {
                         },
                         onInstallApp: { dev in
                             pickAndInstallApp(for: dev)
+                        },
+                        onOpenLogs: { dev in
+                            if let appDelegate = NSApp.delegate as? AppDelegate {
+                                appDelegate.openLogViewer(deviceName: dev.displayName, serial: dev.serial)
+                            }
                         }
                     )
                     Divider()
