@@ -94,32 +94,49 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Re-uses existing windows for the same serial.
     /// Deferred to next run-loop tick so the popover can settle first.
     func openLogViewer(deviceName: String, serial: String) {
+        print("[Heimdall:DEBUG] openLogViewer called — device: \(deviceName), serial: \(serial)")
+        print("[Heimdall:DEBUG] Current activation policy: \(NSApp.activationPolicy().rawValue) (0=regular, 1=accessory, 2=prohibited)")
+        print("[Heimdall:DEBUG] Existing log windows: \(logViewerWindows.keys.joined(separator: ", "))")
+
         // Reuse existing window
         if let existing = logViewerWindows[serial] {
+            print("[Heimdall:DEBUG] Reusing existing window for serial: \(serial)")
             NSApp.setActivationPolicy(.regular)
             existing.window?.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
             return
         }
 
+        print("[Heimdall:DEBUG] Creating new log viewer window (deferred to next run loop)")
+
         // Defer window creation so the transient popover can dismiss cleanly
         DispatchQueue.main.async { [self] in
+            print("[Heimdall:DEBUG] DispatchQueue.main.async fired — creating LogViewerWindowController")
+
             let controller = LogViewerWindowController(
                 deviceName: deviceName,
                 serial: serial,
                 environmentService: environmentService
             )
+            print("[Heimdall:DEBUG] LogViewerWindowController created, window: \(String(describing: controller.window))")
 
             // Clean up reference when window closes
             controller.window?.delegate = self
             logViewerWindows[serial] = controller
 
             // Switch to regular app so standalone windows can appear
+            print("[Heimdall:DEBUG] Setting activation policy to .regular")
             NSApp.setActivationPolicy(.regular)
+            print("[Heimdall:DEBUG] Activation policy now: \(NSApp.activationPolicy().rawValue)")
 
+            print("[Heimdall:DEBUG] Calling showWindow + orderFrontRegardless + activate")
             controller.showWindow(nil)
             controller.window?.orderFrontRegardless()
             NSApp.activate(ignoringOtherApps: true)
+
+            print("[Heimdall:DEBUG] Window visible: \(controller.window?.isVisible ?? false)")
+            print("[Heimdall:DEBUG] Window frame: \(String(describing: controller.window?.frame))")
+            print("[Heimdall:DEBUG] Total log viewer windows: \(logViewerWindows.count)")
         }
     }
 

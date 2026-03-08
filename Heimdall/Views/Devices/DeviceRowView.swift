@@ -72,6 +72,7 @@ struct DeviceRowView: View {
                 // Logs button
                 if let onOpenLogs {
                     Button {
+                        print("[Heimdall:DEBUG] DeviceRowView logs button ACTION fired for: \(device.displayName)")
                         onOpenLogs(device)
                     } label: {
                         Image(systemName: "text.alignleft")

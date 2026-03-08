@@ -157,15 +157,24 @@ struct AndroidEmulatorsTabView: View {
     // MARK: - Log Viewer
 
     private func openLogViewer(for emulator: AndroidEmulator) {
-        guard emulator.status == .booted else { return }
+        print("[Heimdall:DEBUG] Emulator logs button tapped for: \(emulator.name), status: \(emulator.status)")
+        guard emulator.status == .booted else {
+            print("[Heimdall:DEBUG] Emulator not booted, skipping log viewer")
+            return
+        }
         // Resolve the emulator serial and open log viewer via AppDelegate
         Task {
             do {
                 let serial = try await viewModel.resolveSerial(for: emulator)
+                print("[Heimdall:DEBUG] Resolved emulator serial: \(serial)")
                 if let appDelegate = NSApp.delegate as? AppDelegate {
+                    print("[Heimdall:DEBUG] AppDelegate cast succeeded for emulator, calling openLogViewer")
                     appDelegate.openLogViewer(deviceName: emulator.name, serial: serial)
+                } else {
+                    print("[Heimdall:DEBUG] ERROR — AppDelegate cast FAILED for emulator!")
                 }
             } catch {
+                print("[Heimdall:DEBUG] ERROR resolving emulator serial: \(error)")
                 viewModel.errorMessage = "Could not resolve emulator serial: \(error.localizedDescription)"
             }
         }
