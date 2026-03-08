@@ -41,7 +41,7 @@ final class LogViewerViewModel {
     let serial: String
 
     private let logcatService: LogcatService
-    private var streamTask: Task<Void, Never>?
+    private nonisolated(unsafe) var streamTask: Task<Void, Never>?
     private let maxEntries = 5000
 
     init(deviceName: String, serial: String, environmentService: EnvironmentService) {

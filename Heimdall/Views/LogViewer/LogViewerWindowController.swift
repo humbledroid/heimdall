@@ -6,13 +6,15 @@ import SwiftUI
 /// Manages a standalone window for viewing Android logs.
 /// Each device/emulator gets its own window.
 final class LogViewerWindowController: NSWindowController {
-    let serial: String
+    private(set) var serial: String = ""
 
-    convenience init(
+    init(
         deviceName: String,
         serial: String,
         environmentService: EnvironmentService
     ) {
+        self.serial = serial
+
         let viewModel = LogViewerViewModel(
             deviceName: deviceName,
             serial: serial,
@@ -32,12 +34,14 @@ final class LogViewerWindowController: NSWindowController {
         window.center()
         window.setFrameAutosaveName("LogViewer-\(serial)")
         window.minSize = NSSize(width: 500, height: 300)
-
-        // Use the small toolbar style
         window.titlebarAppearsTransparent = false
         window.isReleasedWhenClosed = false
 
-        self.init(window: window)
-        self.serial = serial
+        super.init(window: window)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not supported")
     }
 }
