@@ -7,7 +7,6 @@ struct DeviceMirroringTabView: View {
     let viewModel: DeviceMirroringViewModel
     let environmentService: EnvironmentService
 
-    @State private var showDeepLinkSheet = false
     @State private var deepLinkTarget: AndroidDevice?
     @State private var showWirelessPairingSheet = false
 
@@ -60,19 +59,17 @@ struct DeviceMirroringTabView: View {
                 )
             }
         }
-        .sheet(isPresented: $showDeepLinkSheet) {
-            if let target = deepLinkTarget {
-                DeepLinkSheet(
-                    targetName: target.displayName,
-                    recentLinks: viewModel.deepLinkService.loadHistory(),
-                    onOpen: { url in
-                        Task { await viewModel.openDeepLink(on: target, url: url) }
-                    },
-                    onClearHistory: {
-                        viewModel.deepLinkService.clearHistory()
-                    }
-                )
-            }
+        .sheet(item: $deepLinkTarget) { target in
+            DeepLinkSheet(
+                targetName: target.displayName,
+                recentLinks: viewModel.deepLinkService.loadHistory(),
+                onOpen: { url in
+                    Task { await viewModel.openDeepLink(on: target, url: url) }
+                },
+                onClearHistory: {
+                    viewModel.deepLinkService.clearHistory()
+                }
+            )
         }
     }
 
@@ -176,7 +173,6 @@ struct DeviceMirroringTabView: View {
                         hasScrcpy: environmentService.hasScrcpy,
                         onOpenLink: { dev in
                             deepLinkTarget = dev
-                            showDeepLinkSheet = true
                         },
                         onInstallApp: { dev in
                             pickAndInstallApp(for: dev)

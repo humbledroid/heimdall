@@ -5,7 +5,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
     private var eventMonitor: Any?
-    private var logViewerWindows: [String: LogViewerWindowController] = []
+    private var logViewerWindows: [String: LogViewerWindowController] = [:]
 
     // Shared environment service for the entire app
     let environmentService = EnvironmentService()
@@ -109,6 +109,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         controller.window?.delegate = self
         logViewerWindows[serial] = controller
 
+        // Switch to regular app so standalone windows can appear
+        if NSApp.activationPolicy() != .regular {
+            NSApp.setActivationPolicy(.regular)
+        }
+
         controller.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
@@ -129,6 +134,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         guard let window = notification.object as? NSWindow else { return }
         // Remove the log viewer controller for this window
         logViewerWindows = logViewerWindows.filter { $0.value.window !== window }
+
+        // Revert to accessory (menu-bar-only) when no log windows remain
+        if logViewerWindows.isEmpty {
+            NSApp.setActivationPolicy(.accessory)
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

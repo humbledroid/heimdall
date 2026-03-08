@@ -7,7 +7,6 @@ struct iOSSimulatorsTabView: View {
     let viewModel: iOSSimulatorsViewModel
 
     @State private var showCreateSheet = false
-    @State private var showDeepLinkSheet = false
     @State private var deepLinkTarget: iOSSimulator?
     @State private var searchText = ""
 
@@ -51,19 +50,17 @@ struct iOSSimulatorsTabView: View {
                 simulatorList
             }
         }
-        .sheet(isPresented: $showDeepLinkSheet) {
-            if let target = deepLinkTarget {
-                DeepLinkSheet(
-                    targetName: target.name,
-                    recentLinks: viewModel.deepLinkService.loadHistory(),
-                    onOpen: { url in
-                        Task { await viewModel.openDeepLink(on: target, url: url) }
-                    },
-                    onClearHistory: {
-                        viewModel.deepLinkService.clearHistory()
-                    }
-                )
-            }
+        .sheet(item: $deepLinkTarget) { target in
+            DeepLinkSheet(
+                targetName: target.name,
+                recentLinks: viewModel.deepLinkService.loadHistory(),
+                onOpen: { url in
+                    Task { await viewModel.openDeepLink(on: target, url: url) }
+                },
+                onClearHistory: {
+                    viewModel.deepLinkService.clearHistory()
+                }
+            )
         }
         .sheet(isPresented: $showCreateSheet) {
             CreateSimulatorSheet(
@@ -185,7 +182,6 @@ struct iOSSimulatorsTabView: View {
                                 viewModel: viewModel,
                                 onOpenLink: { sim in
                                     deepLinkTarget = sim
-                                    showDeepLinkSheet = true
                                 },
                                 onInstallApp: { sim in
                                     pickAndInstallApp(for: sim)

@@ -7,7 +7,6 @@ struct AndroidEmulatorsTabView: View {
     let viewModel: AndroidEmulatorsViewModel
 
     @State private var showCreateSheet = false
-    @State private var showDeepLinkSheet = false
     @State private var deepLinkTarget: AndroidEmulator?
     @State private var searchText = ""
 
@@ -55,19 +54,17 @@ struct AndroidEmulatorsTabView: View {
                 }
             }
         }
-        .sheet(isPresented: $showDeepLinkSheet) {
-            if let target = deepLinkTarget {
-                DeepLinkSheet(
-                    targetName: target.name,
-                    recentLinks: viewModel.deepLinkService.loadHistory(),
-                    onOpen: { url in
-                        Task { await viewModel.openDeepLink(on: target, url: url) }
-                    },
-                    onClearHistory: {
-                        viewModel.deepLinkService.clearHistory()
-                    }
-                )
-            }
+        .sheet(item: $deepLinkTarget) { target in
+            DeepLinkSheet(
+                targetName: target.name,
+                recentLinks: viewModel.deepLinkService.loadHistory(),
+                onOpen: { url in
+                    Task { await viewModel.openDeepLink(on: target, url: url) }
+                },
+                onClearHistory: {
+                    viewModel.deepLinkService.clearHistory()
+                }
+            )
         }
         .sheet(isPresented: $showCreateSheet) {
             CreateEmulatorSheet(
@@ -203,7 +200,6 @@ struct AndroidEmulatorsTabView: View {
                         viewModel: viewModel,
                         onOpenLink: { emu in
                             deepLinkTarget = emu
-                            showDeepLinkSheet = true
                         },
                         onInstallApp: { emu in
                             pickAndInstallApp(for: emu)
