@@ -6,6 +6,8 @@ struct iOSSimulatorsTabView: View {
     let viewModel: iOSSimulatorsViewModel
 
     @State private var showCreateSheet = false
+    @State private var showDeepLinkSheet = false
+    @State private var deepLinkTarget: iOSSimulator?
     @State private var searchText = ""
 
     private var filteredGroups: [(runtime: String, simulators: [iOSSimulator])] {
@@ -46,6 +48,20 @@ struct iOSSimulatorsTabView: View {
                 )
             } else {
                 simulatorList
+            }
+        }
+        .sheet(isPresented: $showDeepLinkSheet) {
+            if let target = deepLinkTarget {
+                DeepLinkSheet(
+                    targetName: target.name,
+                    recentLinks: viewModel.deepLinkService.loadHistory(),
+                    onOpen: { url in
+                        Task { await viewModel.openDeepLink(on: target, url: url) }
+                    },
+                    onClearHistory: {
+                        viewModel.deepLinkService.clearHistory()
+                    }
+                )
             }
         }
         .sheet(isPresented: $showCreateSheet) {
@@ -147,7 +163,11 @@ struct iOSSimulatorsTabView: View {
                         ForEach(group.simulators) { simulator in
                             SimulatorRowView(
                                 simulator: simulator,
-                                viewModel: viewModel
+                                viewModel: viewModel,
+                                onOpenLink: { sim in
+                                    deepLinkTarget = sim
+                                    showDeepLinkSheet = true
+                                }
                             )
                             Divider()
                                 .padding(.leading, 44)

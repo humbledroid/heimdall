@@ -103,7 +103,7 @@ actor AVDService {
             throw AVDError.toolNotFound("adb")
         }
 
-        let serial = try await findEmulatorSerial(for: name)
+        let serial = try await serialForEmulator(name: name)
 
         _ = try await runner.execute(
             command: adbPath,
@@ -288,8 +288,8 @@ actor AVDService {
         }
     }
 
-    /// Find the emulator-XXXX serial for a given AVD name.
-    private func findEmulatorSerial(for avdName: String) async throws -> String {
+    /// Find the emulator-XXXX serial for a given AVD name. Public for deep link/install use.
+    func serialForEmulator(name avdName: String) async throws -> String {
         guard let adbPath = environmentService.adbPath else {
             throw AVDError.toolNotFound("adb")
         }

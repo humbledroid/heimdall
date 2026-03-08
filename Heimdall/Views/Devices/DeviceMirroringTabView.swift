@@ -6,6 +6,9 @@ struct DeviceMirroringTabView: View {
     let viewModel: DeviceMirroringViewModel
     let environmentService: EnvironmentService
 
+    @State private var showDeepLinkSheet = false
+    @State private var deepLinkTarget: AndroidDevice?
+
     var body: some View {
         VStack(spacing: 0) {
             if !viewModel.isAvailable {
@@ -43,6 +46,20 @@ struct DeviceMirroringTabView: View {
                 } else {
                     deviceList
                 }
+            }
+        }
+        .sheet(isPresented: $showDeepLinkSheet) {
+            if let target = deepLinkTarget {
+                DeepLinkSheet(
+                    targetName: target.displayName,
+                    recentLinks: viewModel.deepLinkService.loadHistory(),
+                    onOpen: { url in
+                        Task { await viewModel.openDeepLink(on: target, url: url) }
+                    },
+                    onClearHistory: {
+                        viewModel.deepLinkService.clearHistory()
+                    }
+                )
             }
         }
     }
@@ -115,7 +132,11 @@ struct DeviceMirroringTabView: View {
                     DeviceRowView(
                         device: device,
                         viewModel: viewModel,
-                        hasScrcpy: environmentService.hasScrcpy
+                        hasScrcpy: environmentService.hasScrcpy,
+                        onOpenLink: { dev in
+                            deepLinkTarget = dev
+                            showDeepLinkSheet = true
+                        }
                     )
                     Divider()
                         .padding(.leading, 44)

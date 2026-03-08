@@ -29,10 +29,13 @@ final class iOSSimulatorsViewModel {
 
     private let service: SimctlService
     private let openService: OpenService
+    let deepLinkService: DeepLinkService
 
     init(environmentService: EnvironmentService? = nil) {
+        let envService = environmentService ?? EnvironmentService()
         self.service = SimctlService(environmentService: environmentService)
         self.openService = OpenService()
+        self.deepLinkService = DeepLinkService(environmentService: envService)
     }
 
     // MARK: - Load
@@ -116,6 +119,15 @@ final class iOSSimulatorsViewModel {
             await refresh()
         } catch {
             errorMessage = "Failed to delete \(simulator.name): \(error.localizedDescription)"
+        }
+    }
+
+    func openDeepLink(on simulator: iOSSimulator, url: String) async {
+        do {
+            try await deepLinkService.openOnSimulator(udid: simulator.udid, url: url)
+            deepLinkService.saveToHistory(url)
+        } catch {
+            errorMessage = "Failed to open link: \(error.localizedDescription)"
         }
     }
 

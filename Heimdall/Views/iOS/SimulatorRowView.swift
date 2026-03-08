@@ -5,6 +5,7 @@ import SwiftUI
 struct SimulatorRowView: View {
     let simulator: iOSSimulator
     let viewModel: iOSSimulatorsViewModel
+    var onOpenLink: ((iOSSimulator) -> Void)?
 
     @State private var showDeleteConfirmation = false
     @State private var showEraseConfirmation = false
@@ -45,7 +46,10 @@ struct SimulatorRowView: View {
                 },
                 onDelete: {
                     showDeleteConfirmation = true
-                }
+                },
+                onOpenLink: onOpenLink != nil ? {
+                    onOpenLink?(simulator)
+                } : nil
             )
         }
         .padding(.horizontal, 12)

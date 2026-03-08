@@ -38,6 +38,8 @@
 		001A2B1C1D8F9A2F00A1B2C3 /* Resources/Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 001A2B1C1D8F9A2F00A1B2C2 /* Resources/Assets.xcassets */; };
 		001A2B1F1D8F9A2F00A1B2C3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */; };
 		E10A79A72F5C9C49007D9794 /* OpenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10A79A62F5C9C49007D9794 /* OpenService.swift */; };
+		E20B88A12F5D1A3100B2C3D4 /* DeepLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */; };
+		E20B88A32F5D1A3100B2C3D4 /* DeepLinkSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B88A22F5D1A3100B2C3D4 /* DeepLinkSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		001A2B1E1D8F9A2F00A1B2C2 /* Heimdall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Heimdall.entitlements; sourceTree = "<group>"; };
 		001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBDeviceMonitor.swift; sourceTree = "<group>"; };
 		E10A79A62F5C9C49007D9794 /* OpenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenService.swift; sourceTree = "<group>"; };
+		E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkService.swift; sourceTree = "<group>"; };
+		E20B88A22F5D1A3100B2C3D4 /* DeepLinkSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 				001A2B0A1D8F9A2F00A1B2C2 /* ADBService.swift */,
 				001A2B0B1D8F9A2F00A1B2C2 /* ScrcpyService.swift */,
 				001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */,
+				E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 			children = (
 				001A2B1A1D8F9A2F00A1B2C2 /* StatusBadgeView.swift */,
 				001A2B1B1D8F9A2F00A1B2C2 /* ActionButtonGroup.swift */,
+				E20B88A22F5D1A3100B2C3D4 /* DeepLinkSheet.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -315,6 +321,8 @@
 				001A2B191D8F9A2F00A1B2C3 /* SettingsSheet.swift in Sources */,
 				001A2B1A1D8F9A2F00A1B2C3 /* StatusBadgeView.swift in Sources */,
 				001A2B1B1D8F9A2F00A1B2C3 /* ActionButtonGroup.swift in Sources */,
+				E20B88A12F5D1A3100B2C3D4 /* DeepLinkService.swift in Sources */,
+				E20B88A32F5D1A3100B2C3D4 /* DeepLinkSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

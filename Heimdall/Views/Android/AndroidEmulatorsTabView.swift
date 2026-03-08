@@ -6,6 +6,8 @@ struct AndroidEmulatorsTabView: View {
     let viewModel: AndroidEmulatorsViewModel
 
     @State private var showCreateSheet = false
+    @State private var showDeepLinkSheet = false
+    @State private var deepLinkTarget: AndroidEmulator?
     @State private var searchText = ""
 
     private var filteredEmulators: [AndroidEmulator] {
@@ -50,6 +52,20 @@ struct AndroidEmulatorsTabView: View {
                 } else {
                     emulatorList
                 }
+            }
+        }
+        .sheet(isPresented: $showDeepLinkSheet) {
+            if let target = deepLinkTarget {
+                DeepLinkSheet(
+                    targetName: target.name,
+                    recentLinks: viewModel.deepLinkService.loadHistory(),
+                    onOpen: { url in
+                        Task { await viewModel.openDeepLink(on: target, url: url) }
+                    },
+                    onClearHistory: {
+                        viewModel.deepLinkService.clearHistory()
+                    }
+                )
             }
         }
         .sheet(isPresented: $showCreateSheet) {
@@ -146,7 +162,14 @@ struct AndroidEmulatorsTabView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(filteredEmulators) { emulator in
-                    EmulatorRowView(emulator: emulator, viewModel: viewModel)
+                    EmulatorRowView(
+                        emulator: emulator,
+                        viewModel: viewModel,
+                        onOpenLink: { emu in
+                            deepLinkTarget = emu
+                            showDeepLinkSheet = true
+                        }
+                    )
                     Divider()
                         .padding(.leading, 44)
                 }

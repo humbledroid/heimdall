@@ -6,6 +6,7 @@ struct DeviceRowView: View {
     let device: AndroidDevice
     let viewModel: DeviceMirroringViewModel
     let hasScrcpy: Bool
+    var onOpenLink: ((AndroidDevice) -> Void)?
 
     @State private var isMirroring = false
     @State private var isHovered = false
@@ -38,43 +39,59 @@ struct DeviceRowView: View {
 
             Spacer()
 
-            // Mirror button
-            if device.isOnline && hasScrcpy {
-                if isMirroring {
+            // Actions for online devices
+            if device.isOnline {
+                // Deep link button
+                if let onOpenLink {
                     Button {
-                        Task {
-                            await viewModel.stopMirroring(device)
-                            isMirroring = false
-                        }
+                        onOpenLink(device)
                     } label: {
-                        HStack(spacing: 4) {
-                            Circle()
-                                .fill(.red)
-                                .frame(width: 6, height: 6)
-                            Text("Stop")
-                                .font(.caption)
-                        }
+                        Image(systemName: "link")
+                            .font(.caption)
                     }
                     .buttonStyle(.bordered)
                     .controlSize(.small)
-                    .tint(.red)
-                } else {
-                    Button {
-                        Task {
-                            await viewModel.startMirroring(device)
-                            isMirroring = true
+                    .help("Open Deep Link")
+                }
+
+                // Mirror button
+                if hasScrcpy {
+                    if isMirroring {
+                        Button {
+                            Task {
+                                await viewModel.stopMirroring(device)
+                                isMirroring = false
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Circle()
+                                    .fill(.red)
+                                    .frame(width: 6, height: 6)
+                                Text("Stop")
+                                    .font(.caption)
+                            }
                         }
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "rectangle.on.rectangle")
-                                .font(.caption2)
-                            Text("Mirror")
-                                .font(.caption)
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .tint(.red)
+                    } else {
+                        Button {
+                            Task {
+                                await viewModel.startMirroring(device)
+                                isMirroring = true
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "rectangle.on.rectangle")
+                                    .font(.caption2)
+                                Text("Mirror")
+                                    .font(.caption)
+                            }
                         }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .tint(.blue)
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
-                    .tint(.blue)
                 }
             } else if device.connectionState == "unauthorized" {
                 Text("Authorize on device")

@@ -10,6 +10,8 @@ struct ActionButtonGroup: View {
     let onShutdown: () -> Void
     var onErase: (() -> Void)?
     var onDelete: (() -> Void)?
+    var onOpenLink: (() -> Void)?
+    var onInstallApp: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 4) {
@@ -44,33 +46,56 @@ struct ActionButtonGroup: View {
             }
 
             // Overflow menu for additional actions
-            if onErase != nil || onDelete != nil {
-                Menu {
-                    if let onErase {
+            Menu {
+                // Actions available when running
+                if status == .booted {
+                    if let onOpenLink {
                         Button {
-                            onErase()
+                            onOpenLink()
                         } label: {
-                            Label("Erase Contents", systemImage: "arrow.counterclockwise")
+                            Label("Open Link…", systemImage: "link")
                         }
                     }
 
-                    Divider()
-
-                    if let onDelete {
-                        Button(role: .destructive) {
-                            onDelete()
+                    if let onInstallApp {
+                        Button {
+                            onInstallApp()
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label("Install App…", systemImage: "square.and.arrow.down")
                         }
                     }
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .font(.caption)
-                        .frame(width: 20, height: 20)
+
+                    if onOpenLink != nil || onInstallApp != nil {
+                        Divider()
+                    }
                 }
-                .menuStyle(.borderlessButton)
-                .frame(width: 24)
+
+                if let onErase {
+                    Button {
+                        onErase()
+                    } label: {
+                        Label("Erase Contents", systemImage: "arrow.counterclockwise")
+                    }
+                }
+
+                if onErase != nil && onDelete != nil {
+                    Divider()
+                }
+
+                if let onDelete {
+                    Button(role: .destructive) {
+                        onDelete()
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+                    .font(.caption)
+                    .frame(width: 20, height: 20)
             }
+            .menuStyle(.borderlessButton)
+            .frame(width: 24)
         }
     }
 }

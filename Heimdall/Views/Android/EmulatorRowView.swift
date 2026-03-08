@@ -5,6 +5,7 @@ import SwiftUI
 struct EmulatorRowView: View {
     let emulator: AndroidEmulator
     let viewModel: AndroidEmulatorsViewModel
+    var onOpenLink: ((AndroidEmulator) -> Void)?
 
     @State private var showDeleteConfirmation = false
     @State private var isHovered = false
@@ -54,7 +55,10 @@ struct EmulatorRowView: View {
                 },
                 onDelete: {
                     showDeleteConfirmation = true
-                }
+                },
+                onOpenLink: onOpenLink != nil ? {
+                    onOpenLink?(emulator)
+                } : nil
             )
         }
         .padding(.horizontal, 12)

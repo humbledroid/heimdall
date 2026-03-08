@@ -18,6 +18,7 @@ final class DeviceMirroringViewModel {
     private let scrcpyService: ScrcpyService
     private let environmentService: EnvironmentService
     private let usbMonitor: USBDeviceMonitor
+    let deepLinkService: DeepLinkService
     private var monitorTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService) {
@@ -25,6 +26,7 @@ final class DeviceMirroringViewModel {
         self.adbService = ADBService(environmentService: environmentService)
         self.scrcpyService = ScrcpyService(environmentService: environmentService)
         self.usbMonitor = USBDeviceMonitor(environmentService: environmentService)
+        self.deepLinkService = DeepLinkService(environmentService: environmentService)
     }
 
     // MARK: - Load
@@ -144,6 +146,17 @@ final class DeviceMirroringViewModel {
     /// Check if a specific device is being mirrored.
     func isMirroring(_ device: AndroidDevice) async -> Bool {
         await scrcpyService.isMirroring(deviceSerial: device.serial)
+    }
+
+    // MARK: - Deep Links
+
+    func openDeepLink(on device: AndroidDevice, url: String) async {
+        do {
+            try await deepLinkService.openOnAndroid(serial: device.serial, url: url)
+            deepLinkService.saveToHistory(url)
+        } catch {
+            errorMessage = "Failed to open link: \(error.localizedDescription)"
+        }
     }
 
     // MARK: - USB Monitoring (Event-Driven)

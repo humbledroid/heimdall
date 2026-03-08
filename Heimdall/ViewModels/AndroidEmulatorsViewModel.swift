@@ -21,10 +21,12 @@ final class AndroidEmulatorsViewModel {
 
     private let avdService: AVDService
     private let environmentService: EnvironmentService
+    let deepLinkService: DeepLinkService
 
     init(environmentService: EnvironmentService) {
         self.environmentService = environmentService
         self.avdService = AVDService(environmentService: environmentService)
+        self.deepLinkService = DeepLinkService(environmentService: environmentService)
     }
 
     // MARK: - Load
@@ -112,6 +114,24 @@ final class AndroidEmulatorsViewModel {
             await refresh()
         } catch {
             errorMessage = "Failed to delete \(emulator.name): \(error.localizedDescription)"
+        }
+    }
+
+    /// Open a deep link on a running emulator.
+    /// Resolves the emulator's adb serial (emulator-XXXX) first.
+    func openDeepLink(on emulator: AndroidEmulator, url: String) async {
+        guard emulator.status == .booted else {
+            errorMessage = "Emulator must be running to open links."
+            return
+        }
+
+        do {
+            // Find the emulator's adb serial
+            let serial = try await avdService.serialForEmulator(name: emulator.name)
+            try await deepLinkService.openOnAndroid(serial: serial, url: url)
+            deepLinkService.saveToHistory(url)
+        } catch {
+            errorMessage = "Failed to open link: \(error.localizedDescription)"
         }
     }
 
