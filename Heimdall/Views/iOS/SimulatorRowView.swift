@@ -6,6 +6,7 @@ struct SimulatorRowView: View {
     let simulator: iOSSimulator
     let viewModel: iOSSimulatorsViewModel
     var onOpenLink: ((iOSSimulator) -> Void)?
+    var onInstallApp: ((iOSSimulator) -> Void)?
 
     @State private var showDeleteConfirmation = false
     @State private var showEraseConfirmation = false
@@ -49,6 +50,9 @@ struct SimulatorRowView: View {
                 },
                 onOpenLink: onOpenLink != nil ? {
                     onOpenLink?(simulator)
+                } : nil,
+                onInstallApp: onInstallApp != nil ? {
+                    onInstallApp?(simulator)
                 } : nil
             )
         }

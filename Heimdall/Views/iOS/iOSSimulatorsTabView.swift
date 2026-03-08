@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - iOS Simulators Tab
 
@@ -153,6 +154,24 @@ struct iOSSimulatorsTabView: View {
         .padding(.vertical, 8)
     }
 
+    // MARK: - Install App
+
+    private func pickAndInstallApp(for simulator: iOSSimulator) {
+        let panel = NSOpenPanel()
+        panel.title = "Select App to Install"
+        panel.allowedContentTypes = [.applicationBundle]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = true
+        panel.message = "Select a .app bundle to install on \(simulator.name)"
+
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+
+        Task {
+            await viewModel.installApp(on: simulator, appPath: url.path)
+        }
+    }
+
     // MARK: - Simulator List
 
     private var simulatorList: some View {
@@ -167,6 +186,9 @@ struct iOSSimulatorsTabView: View {
                                 onOpenLink: { sim in
                                     deepLinkTarget = sim
                                     showDeepLinkSheet = true
+                                },
+                                onInstallApp: { sim in
+                                    pickAndInstallApp(for: sim)
                                 }
                             )
                             Divider()

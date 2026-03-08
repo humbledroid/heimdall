@@ -19,6 +19,7 @@ final class DeviceMirroringViewModel {
     private let environmentService: EnvironmentService
     private let usbMonitor: USBDeviceMonitor
     let deepLinkService: DeepLinkService
+    let appInstallerService: AppInstallerService
     private var monitorTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService) {
@@ -27,6 +28,7 @@ final class DeviceMirroringViewModel {
         self.scrcpyService = ScrcpyService(environmentService: environmentService)
         self.usbMonitor = USBDeviceMonitor(environmentService: environmentService)
         self.deepLinkService = DeepLinkService(environmentService: environmentService)
+        self.appInstallerService = AppInstallerService(environmentService: environmentService)
     }
 
     // MARK: - Load
@@ -146,6 +148,16 @@ final class DeviceMirroringViewModel {
     /// Check if a specific device is being mirrored.
     func isMirroring(_ device: AndroidDevice) async -> Bool {
         await scrcpyService.isMirroring(deviceSerial: device.serial)
+    }
+
+    // MARK: - Install App
+
+    func installApp(on device: AndroidDevice, apkPath: String) async {
+        do {
+            try await appInstallerService.installOnAndroid(serial: device.serial, apkPath: apkPath)
+        } catch {
+            errorMessage = "Failed to install app: \(error.localizedDescription)"
+        }
     }
 
     // MARK: - Deep Links

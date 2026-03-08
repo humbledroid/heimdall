@@ -6,6 +6,7 @@ struct EmulatorRowView: View {
     let emulator: AndroidEmulator
     let viewModel: AndroidEmulatorsViewModel
     var onOpenLink: ((AndroidEmulator) -> Void)?
+    var onInstallApp: ((AndroidEmulator) -> Void)?
 
     @State private var showDeleteConfirmation = false
     @State private var isHovered = false
@@ -58,6 +59,9 @@ struct EmulatorRowView: View {
                 },
                 onOpenLink: onOpenLink != nil ? {
                     onOpenLink?(emulator)
+                } : nil,
+                onInstallApp: onInstallApp != nil ? {
+                    onInstallApp?(emulator)
                 } : nil
             )
         }

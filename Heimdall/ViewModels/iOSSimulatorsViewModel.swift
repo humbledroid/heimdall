@@ -30,12 +30,14 @@ final class iOSSimulatorsViewModel {
     private let service: SimctlService
     private let openService: OpenService
     let deepLinkService: DeepLinkService
+    let appInstallerService: AppInstallerService
 
     init(environmentService: EnvironmentService? = nil) {
         let envService = environmentService ?? EnvironmentService()
         self.service = SimctlService(environmentService: environmentService)
         self.openService = OpenService()
         self.deepLinkService = DeepLinkService(environmentService: envService)
+        self.appInstallerService = AppInstallerService(environmentService: envService)
     }
 
     // MARK: - Load
@@ -119,6 +121,14 @@ final class iOSSimulatorsViewModel {
             await refresh()
         } catch {
             errorMessage = "Failed to delete \(simulator.name): \(error.localizedDescription)"
+        }
+    }
+
+    func installApp(on simulator: iOSSimulator, appPath: String) async {
+        do {
+            try await appInstallerService.installOnSimulator(udid: simulator.udid, appPath: appPath)
+        } catch {
+            errorMessage = "Failed to install app: \(error.localizedDescription)"
         }
     }
 

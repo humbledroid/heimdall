@@ -7,6 +7,7 @@ struct DeviceRowView: View {
     let viewModel: DeviceMirroringViewModel
     let hasScrcpy: Bool
     var onOpenLink: ((AndroidDevice) -> Void)?
+    var onInstallApp: ((AndroidDevice) -> Void)?
 
     @State private var isMirroring = false
     @State private var isHovered = false
@@ -41,6 +42,19 @@ struct DeviceRowView: View {
 
             // Actions for online devices
             if device.isOnline {
+                // Install app button
+                if let onInstallApp {
+                    Button {
+                        onInstallApp(device)
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                            .font(.caption)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .help("Install App")
+                }
+
                 // Deep link button
                 if let onOpenLink {
                     Button {

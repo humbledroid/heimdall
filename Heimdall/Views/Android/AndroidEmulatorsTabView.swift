@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - Android Emulators Tab
 
@@ -156,6 +157,24 @@ struct AndroidEmulatorsTabView: View {
         .padding(.vertical, 8)
     }
 
+    // MARK: - Install App
+
+    private func pickAndInstallApp(for emulator: AndroidEmulator) {
+        let panel = NSOpenPanel()
+        panel.title = "Select APK to Install"
+        panel.allowedContentTypes = [.init(filenameExtension: "apk")!]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.message = "Select an .apk file to install on \(emulator.name)"
+
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+
+        Task {
+            await viewModel.installApp(on: emulator, apkPath: url.path)
+        }
+    }
+
     // MARK: - List
 
     private var emulatorList: some View {
@@ -168,6 +187,9 @@ struct AndroidEmulatorsTabView: View {
                         onOpenLink: { emu in
                             deepLinkTarget = emu
                             showDeepLinkSheet = true
+                        },
+                        onInstallApp: { emu in
+                            pickAndInstallApp(for: emu)
                         }
                     )
                     Divider()

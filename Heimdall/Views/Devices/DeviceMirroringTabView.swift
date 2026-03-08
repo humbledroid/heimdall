@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - Device Mirroring Tab
 
@@ -123,6 +124,24 @@ struct DeviceMirroringTabView: View {
         .padding(.vertical, 4)
     }
 
+    // MARK: - Install App
+
+    private func pickAndInstallApp(for device: AndroidDevice) {
+        let panel = NSOpenPanel()
+        panel.title = "Select APK to Install"
+        panel.allowedContentTypes = [.init(filenameExtension: "apk")!]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.message = "Select an .apk file to install on \(device.displayName)"
+
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+
+        Task {
+            await viewModel.installApp(on: device, apkPath: url.path)
+        }
+    }
+
     // MARK: - Device List
 
     private var deviceList: some View {
@@ -136,6 +155,9 @@ struct DeviceMirroringTabView: View {
                         onOpenLink: { dev in
                             deepLinkTarget = dev
                             showDeepLinkSheet = true
+                        },
+                        onInstallApp: { dev in
+                            pickAndInstallApp(for: dev)
                         }
                     )
                     Divider()

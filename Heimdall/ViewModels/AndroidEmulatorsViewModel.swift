@@ -22,11 +22,13 @@ final class AndroidEmulatorsViewModel {
     private let avdService: AVDService
     private let environmentService: EnvironmentService
     let deepLinkService: DeepLinkService
+    let appInstallerService: AppInstallerService
 
     init(environmentService: EnvironmentService) {
         self.environmentService = environmentService
         self.avdService = AVDService(environmentService: environmentService)
         self.deepLinkService = DeepLinkService(environmentService: environmentService)
+        self.appInstallerService = AppInstallerService(environmentService: environmentService)
     }
 
     // MARK: - Load
@@ -114,6 +116,21 @@ final class AndroidEmulatorsViewModel {
             await refresh()
         } catch {
             errorMessage = "Failed to delete \(emulator.name): \(error.localizedDescription)"
+        }
+    }
+
+    /// Install an APK on a running emulator.
+    func installApp(on emulator: AndroidEmulator, apkPath: String) async {
+        guard emulator.status == .booted else {
+            errorMessage = "Emulator must be running to install apps."
+            return
+        }
+
+        do {
+            let serial = try await avdService.serialForEmulator(name: emulator.name)
+            try await appInstallerService.installOnAndroid(serial: serial, apkPath: apkPath)
+        } catch {
+            errorMessage = "Failed to install app: \(error.localizedDescription)"
         }
     }
 
