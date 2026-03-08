@@ -20,6 +20,7 @@ final class DeviceMirroringViewModel {
     private let usbMonitor: USBDeviceMonitor
     let deepLinkService: DeepLinkService
     let appInstallerService: AppInstallerService
+    let wirelessADBService: WirelessADBService
     private var monitorTask: Task<Void, Never>?
 
     init(environmentService: EnvironmentService) {
@@ -29,6 +30,7 @@ final class DeviceMirroringViewModel {
         self.usbMonitor = USBDeviceMonitor(environmentService: environmentService)
         self.deepLinkService = DeepLinkService(environmentService: environmentService)
         self.appInstallerService = AppInstallerService(environmentService: environmentService)
+        self.wirelessADBService = WirelessADBService(environmentService: environmentService)
     }
 
     // MARK: - Load
@@ -148,6 +150,25 @@ final class DeviceMirroringViewModel {
     /// Check if a specific device is being mirrored.
     func isMirroring(_ device: AndroidDevice) async -> Bool {
         await scrcpyService.isMirroring(deviceSerial: device.serial)
+    }
+
+    // MARK: - Wireless ADB Pairing
+
+    /// Pair and connect to a device wirelessly.
+    func pairAndConnect(ip: String, pairingPort: String, code: String, connectPort: String) async {
+        do {
+            _ = try await wirelessADBService.pair(ip: ip, port: pairingPort, code: code)
+
+            // If a connection port was provided, connect after pairing
+            if !connectPort.isEmpty {
+                _ = try await wirelessADBService.connect(ip: ip, port: connectPort)
+            }
+
+            // Refresh to pick up the newly connected device
+            await refresh()
+        } catch {
+            errorMessage = "Wireless pairing failed: \(error.localizedDescription)"
+        }
     }
 
     // MARK: - Install App

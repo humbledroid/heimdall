@@ -41,6 +41,8 @@
 		E20B88A12F5D1A3100B2C3D4 /* DeepLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */; };
 		E20B88A32F5D1A3100B2C3D4 /* DeepLinkSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B88A22F5D1A3100B2C3D4 /* DeepLinkSheet.swift */; };
 		E30C99B12F5D2B4200C3D4E5 /* AppInstallerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30C99B02F5D2B4200C3D4E5 /* AppInstallerService.swift */; };
+		E40D00C12F5D3C5300D4E5F6 /* WirelessADBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D00C02F5D3C5300D4E5F6 /* WirelessADBService.swift */; };
+		E40D00C32F5D3C5300D4E5F6 /* WirelessPairingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D00C22F5D3C5300D4E5F6 /* WirelessPairingSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +83,8 @@
 		E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkService.swift; sourceTree = "<group>"; };
 		E20B88A22F5D1A3100B2C3D4 /* DeepLinkSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSheet.swift; sourceTree = "<group>"; };
 		E30C99B02F5D2B4200C3D4E5 /* AppInstallerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInstallerService.swift; sourceTree = "<group>"; };
+		E40D00C02F5D3C5300D4E5F6 /* WirelessADBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WirelessADBService.swift; sourceTree = "<group>"; };
+		E40D00C22F5D3C5300D4E5F6 /* WirelessPairingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WirelessPairingSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,7 @@
 				001A2B1F1D8F9A2F00A1B2C2 /* USBDeviceMonitor.swift */,
 				E20B88A02F5D1A3100B2C3D4 /* DeepLinkService.swift */,
 				E30C99B02F5D2B4200C3D4E5 /* AppInstallerService.swift */,
+				E40D00C02F5D3C5300D4E5F6 /* WirelessADBService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			children = (
 				001A2B171D8F9A2F00A1B2C2 /* DeviceMirroringTabView.swift */,
 				001A2B181D8F9A2F00A1B2C2 /* DeviceRowView.swift */,
+				E40D00C22F5D3C5300D4E5F6 /* WirelessPairingSheet.swift */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -327,6 +333,8 @@
 				E20B88A12F5D1A3100B2C3D4 /* DeepLinkService.swift in Sources */,
 				E20B88A32F5D1A3100B2C3D4 /* DeepLinkSheet.swift in Sources */,
 				E30C99B12F5D2B4200C3D4E5 /* AppInstallerService.swift in Sources */,
+				E40D00C12F5D3C5300D4E5F6 /* WirelessADBService.swift in Sources */,
+				E40D00C32F5D3C5300D4E5F6 /* WirelessPairingSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

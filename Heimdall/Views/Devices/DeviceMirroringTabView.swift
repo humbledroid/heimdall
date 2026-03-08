@@ -9,6 +9,7 @@ struct DeviceMirroringTabView: View {
 
     @State private var showDeepLinkSheet = false
     @State private var deepLinkTarget: AndroidDevice?
+    @State private var showWirelessPairingSheet = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -49,6 +50,16 @@ struct DeviceMirroringTabView: View {
                 }
             }
         }
+        .sheet(isPresented: $showWirelessPairingSheet) {
+            WirelessPairingSheet { ip, pairPort, code, connectPort in
+                await viewModel.pairAndConnect(
+                    ip: ip,
+                    pairingPort: pairPort,
+                    code: code,
+                    connectPort: connectPort
+                )
+            }
+        }
         .sheet(isPresented: $showDeepLinkSheet) {
             if let target = deepLinkTarget {
                 DeepLinkSheet(
@@ -74,6 +85,17 @@ struct DeviceMirroringTabView: View {
                 .foregroundStyle(.secondary)
 
             Spacer()
+
+            // Wireless pairing button
+            Button {
+                showWirelessPairingSheet = true
+            } label: {
+                Image(systemName: "wifi")
+                    .font(.caption)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+            .help("Pair wireless device")
 
             // Refresh button
             Button {
