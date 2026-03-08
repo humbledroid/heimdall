@@ -179,13 +179,7 @@ struct DeviceMirroringTabView: View {
                         },
                         onOpenLogs: { dev in
                             print("[Heimdall:DEBUG] Logs button tapped for device: \(dev.displayName), serial: \(dev.serial)")
-                            print("[Heimdall:DEBUG] NSApp.delegate type: \(type(of: NSApp.delegate as Any))")
-                            if let appDelegate = NSApp.delegate as? AppDelegate {
-                                print("[Heimdall:DEBUG] AppDelegate cast succeeded, calling openLogViewer")
-                                appDelegate.openLogViewer(deviceName: dev.displayName, serial: dev.serial)
-                            } else {
-                                print("[Heimdall:DEBUG] ERROR — AppDelegate cast FAILED! NSApp.delegate = \(String(describing: NSApp.delegate))")
-                            }
+                            AppDelegate.shared.openLogViewer(deviceName: dev.displayName, serial: dev.serial)
                         }
                     )
                     Divider()

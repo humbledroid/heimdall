@@ -2,6 +2,10 @@ import AppKit
 import SwiftUI
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+    /// Global access — needed because NSApp.delegate is SwiftUI's wrapper,
+    /// not our AppDelegate, when using @NSApplicationDelegateAdaptor.
+    static private(set) var shared: AppDelegate!
+
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
     private var eventMonitor: Any?
@@ -11,6 +15,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     let environmentService = EnvironmentService()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        AppDelegate.shared = self
         // Hide dock icon — we're menu bar only
         NSApplication.shared.setActivationPolicy(.accessory)
 
