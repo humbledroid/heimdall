@@ -22,7 +22,7 @@ actor ScrcpyService {
     // MARK: - Start Mirroring
 
     /// Start mirroring a device. Returns the session info.
-    func startMirroring(deviceSerial: String, windowTitle: String? = nil) async throws -> MirroringSession {
+    func startMirroring(deviceSerial: String, windowTitle: String? = nil, alwaysOnTop: Bool = true) async throws -> MirroringSession {
         guard let scrcpyPath = environmentService.scrcpyPath else {
             throw ScrcpyError.scrcpyNotFound
         }
@@ -38,8 +38,9 @@ actor ScrcpyService {
             args += ["--window-title", title]
         }
 
-        // Keep window on top for convenience
-        args += ["--always-on-top"]
+        if alwaysOnTop {
+            args += ["--always-on-top"]
+        }
 
         let process = try await runner.launchDetached(
             command: scrcpyPath,

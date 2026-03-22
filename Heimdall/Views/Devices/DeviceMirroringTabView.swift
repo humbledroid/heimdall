@@ -83,6 +83,19 @@ struct DeviceMirroringTabView: View {
 
             Spacer()
 
+            // Always-on-top toggle for scrcpy mirroring
+            if environmentService.hasScrcpy {
+                Button {
+                    viewModel.alwaysOnTop.toggle()
+                } label: {
+                    Image(systemName: viewModel.alwaysOnTop ? "pin.fill" : "pin.slash")
+                        .font(.caption)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .help(viewModel.alwaysOnTop ? "Mirror window: always on top (click to disable)" : "Mirror window: normal (click to pin on top)")
+            }
+
             // Wireless pairing button
             Button {
                 showWirelessPairingSheet = true

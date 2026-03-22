@@ -13,6 +13,10 @@ final class DeviceMirroringViewModel {
     var isRefreshing: Bool = false
     var errorMessage: String?
     var isAvailable: Bool = false
+    var alwaysOnTop: Bool {
+        get { UserDefaults.standard.object(forKey: "scrcpyAlwaysOnTop") as? Bool ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: "scrcpyAlwaysOnTop") }
+    }
 
     private let adbService: ADBService
     private let scrcpyService: ScrcpyService
@@ -134,7 +138,8 @@ final class DeviceMirroringViewModel {
         do {
             let session = try await scrcpyService.startMirroring(
                 deviceSerial: device.serial,
-                windowTitle: "Heimdall - \(device.displayName)"
+                windowTitle: "Heimdall - \(device.displayName)",
+                alwaysOnTop: alwaysOnTop
             )
             activeSessions.append(session)
         } catch {
